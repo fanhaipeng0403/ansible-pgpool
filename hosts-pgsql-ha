@@ -1,0 +1,57 @@
+[localhost]
+127.0.0.1
+
+[pgsqlPrimary]
+10.247.84.137 hostname="node1" ansible_user=root ansible_password=root
+
+[pgsqlStandby]
+10.247.84.170 hostname="node2" ansible_user=root ansible_password=root
+10.247.84.149 hostname="node3" ansible_user=root ansible_password=root
+
+
+[pgsqlHA:children]
+pgsqlPrimary
+pgsqlStandby
+
+[pgsqlHA:vars]
+CIDR="0.0.0.0"
+VIP="10.247.84.137"
+interface="eth0"
+
+db_postgres_password="changeit"
+db_pgpool_password="changeit"
+db_repl_password="changeit"
+pgpool_pcp_password="changeit"
+
+pool_decryption_key="some string"
+timezone="Asia/Shanghai"
+
+[all:vars]
+pgport=5432
+pgpool_port=9999
+pcp_port=9898
+watchdog_port=9000
+wd_heartbeat_port=9694
+
+# deploy directory
+base_dir="/root/ansible-pgpool"
+
+
+# pgsql home
+pghome="/var/lib/pgsql"
+# PGDATA
+pgdata="{{ pghome }}/13/data"
+
+# pgsql high availability groups
+[pgsqlHA:children]
+pgsqlPrimary
+pgsqlStandby
+
+
+[all:vars]
+# deploy directory
+base_dir="/root/ansible-pgpool"
+# pgsql home
+pghome="/var/lib/pgsql"
+# PGDATA
+pgdata="{{ pghome }}/13/data"

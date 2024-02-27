@@ -1,0 +1,124 @@
+backend_clustering_mode = 'streaming_replication'
+
+# - pgpool Connection Settings -
+
+listen_addresses = '*'
+port = {{ pgpool_port }}
+
+# - Streaming Replication Check
+
+sr_check_user = 'pgpool'
+sr_check_password = ''
+
+# - Health Check
+
+health_check_period = 5
+health_check_timeout = 30
+health_check_user = 'pgpool'
+health_check_user = 'pgpool'
+health_check_password = 'lhr'
+health_check_max_retries = 3
+search_primary_node_timeout=10min
+
+# - Backend Connection Settings -
+
+backend_hostname0 = '{{ hostvars[groups['pgsqlPrimary'][0]]['ansible_hostname'] }}'
+backend_port0 = {{ hostvars[groups['pgsqlPrimary'][0]]['pgport'] }}
+backend_weight0 = 1
+backend_data_directory0 = '{{ pgdata }}'
+backend_flag0 = 'ALLOW_TO_FAILOVER'
+backend_application_name0 = '{{ hostvars[groups['pgsqlPrimary'][0]]['ansible_hostname'] }}'
+
+
+{% for host in groups['pgsqlStandby'] %}
+backend_hostname{{ loop.index }} = '{{ hostvars[host]['ansible_hostname'] }}'
+backend_port{{ loop.index }} = {{ hostvars[host]['pgport'] }}
+backend_weight{{ loop.index }} = 1
+backend_data_directory{{ loop.index }} = '{{ pgdata }}'
+backend_flag{{ loop.index }} = 'ALLOW_TO_FAILOVER'
+backend_application_name{{ loop.index }} = '{{ hostvars[host]['ansible_hostname'] }}'
+{% endfor %}
+
+
+# - Failover configuration
+
+
+failover_command = '/etc/pgpool-II/failover.sh %d %h %p %D %m %H %M %P %r %R %N %S'
+{% if groups['pgsqlHA'] | length > 2 %}
+follow_master_command = '/etc/pgpool-II/follow_master.sh %d %h %p %D %m %M %H %P %r %R'
+{% endif %}
+
+# - Online Recovery Configurations
+
+
+recovery_user = 'postgres'
+recovery_password = ''
+recovery_1st_stage_command = 'recovery_1st_stage'
+
+
+# - Client Authentication Configuration
+
+enable_pool_hba = on
+pool_passwd = '/etc/pgpool-II/pool_passwd'
+
+
+
+# - Watchdog Configuration
+
+
+use_watchdog = on
+
+delegate_IP = '{{ VIP }}'
+
+if_up_cmd = '/usr/bin/sudo /sbin/ip addr add $_IP_$/{{ VIP] }} dev {{ interface }} label {{ interface }}:0'
+if_down_cmd = '/usr/bin/sudo /sbin/ip addr del $_IP_$/{{ VIP)[1] }} dev {{ interface }}'
+arping_cmd = '/usr/bin/sudo /usr/sbin/arping -U $_IP_$ -w 1 -I {{ interface }}'
+
+
+
+{% for host in groups['pgsqlHA'] %}
+hostname{{ loop.index }} = '{{ hostvars[host]['hostname'] }}'
+wd_port{{ loop.index }} = {{ watchdog_port }}
+pgpool_port{{ loop.index }} = {{ pgpool_port }}
+
+{% endfor %}
+
+{% for host in groups['pgsqlHA'] %}
+
+heartbeat_hostname{{ loop.index }} = '{{ hostvars[host]['hostname'] }}'
+heartbeat_port{{ loop.index }} = {{ wd_heartbeat_port }}
+heartbeat_device{{ loop.index }} = ''
+
+{% endfor %}
+
+
+
+
+wd_lifecheck_method = 'heartbeat'
+wd_interval = 10
+
+wd_heartbeat_keepalive = 2
+wd_heartbeat_deadtime = 30
+wd_escalation_command = '/etc/pgpool-II/escalation.sh'
+
+
+
+# - Where to log
+
+log_destination = 'stderr'
+logging_collector = on
+log_directory = '/var/log/pgpool-II'
+log_filename = 'pgpool-%Y-%m-%d_%H%M%S.log'
+log_truncate_on_rotation = on
+log_rotation_age = 1d
+log_rotation_size = 10MB
+
+
+pid_file_name = '/var/run/postgresql/pgpool.pid'
+
+#------------------------------------------------------------------------------
+# LOAD BALANCING MODE
+#------------------------------------------------------------------------------
+
+load_balance_mode = on
+
