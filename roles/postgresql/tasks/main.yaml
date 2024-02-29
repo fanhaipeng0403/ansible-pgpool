@@ -12,6 +12,11 @@
         name: "{{ pgsql_repo }}"
         state: present
 
+    - name: install centos-release-scl-rh
+      yum:
+        name: centos-release-scl-rh
+        state: present
+
     - name: Install pgsql online
       yum:
         name: "{{ pgsql_yum }}"
