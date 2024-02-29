@@ -81,30 +81,21 @@
         group: postgres
         mode: 0600
 
-    - name: Create pgpool decryption key
-      shell: echo '{{ pool_decryption_key }}' > ~/.pgpoolkey
-      become: true
-      become_user: postgres
-
-    - name: Create pgpool decryption key
-      file:
-        path: ~/.pgpoolkey
-        owner: postgres
-        group: postgres
-        mode: 0600
-        state: touch
-      become: true
-      become_user: postgres
+    - name: Create .pgpoolkey file with pool_decryption_key variable
+      copy:
+        content: "{{ pool_decryption_key }}"
+        dest: "~/.pgpoolkey"
+        mode: "0600"
 
     - name: Generate pool_passwd for pgpool
-      shell: sudo pg_enc -m -k ~/.pgpoolkey -u pgpool "{{ db_pgpool_password }}"
+      shell: pg_enc -m -k ~/.pgpoolkey -u pgpool "{{ db_pgpool_password }}"
       become: true
-      become_user: postgres
+      become_user: root
 
     - name: Generate pool_passwd for postgres
-      shell: sudo pg_enc -m -k ~/.pgpoolkey -u postgres "{{ db_postgres_password }}"
+      shell: pg_enc -m -k ~/.pgpoolkey -u postgres "{{ db_postgres_password }}"
       become: true
-      become_user: postgres
+      become_user: root
 
     - name: Copy pgpool_node_id
       template:
