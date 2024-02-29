@@ -18,6 +18,35 @@
     - pgpool_install
 
 
+
+- name: Copy template pgpool.conf
+    template:
+      src: pgpool.conf.j2
+      dest: /etc/pgpool-II/pgpool.conf
+      owner: postgres
+      group: postgres
+      mode: 0600
+
+
+- name: Generate pool_passwd for pgpool
+  shell: pg_md5 -p -m -u pgpool pool_passwd  "{{ db_pgpool_password }}"
+  become: true
+  become_user: root
+
+- name: Generate pool_passwd for postgres
+  shell: pg_md5 -p -m -u postgres  "{{ db_postgres_password }}"
+  become: true
+  become_user: root
+
+
+- name: Copy pgpool_node_id
+  template:
+    src: pgpool_node_id.j2
+    dest: /etc/pgpool-II/pgpool_node_id
+    owner: postgres
+    group: postgres
+    mode: 0600
+
 - block:
     - name: Create pgpool log directory
       file:
@@ -35,70 +64,10 @@
       when: inventory_hostname == groups['pgsqlPrimary'][0]
       tags: recovery
 
-- block:
-    - name: Copy failover.sh
-      copy:
-        src: failover.sh
-        dest: /etc/pgpool-II/failover.sh
-        owner: postgres
-        group: postgres
-        mode: 0755
 
-    - name: Copy follow_master.sh
-      copy:
-        src: follow_master.sh
-        dest: /etc/pgpool-II/follow_master.sh
-        owner: postgres
-        group: postgres
-        mode: 0755
-  tags: scripts
-
-- block:
-    - name: Copy recovery_1st_stage
-      copy:
-        src: recovery_1st_stage
-        dest: '{{ pgdata }}/recovery_1st_stage'
-        owner: postgres
-        group: postgres
-        mode: 0755
-
-    - name: pgpool_remote_start
-      copy:
-        src: pgpool_remote_start
-        dest: '{{ pgdata }}/pgpool_remote_start'
-        owner: postgres
-        group: postgres
-        mode: 0755
-  when: inventory_hostname == groups['pgsqlPrimary'][0]
-  tags: scripts
 
 - block:
 
-    - name: Copy template pgpool.conf
-      template:
-        src: pgpool.conf.j2
-        dest: /etc/pgpool-II/pgpool.conf
-        owner: postgres
-        group: postgres
-        mode: 0600
-
-    - name: Generate pool_passwd for pgpool
-      shell: pg_md5 -p -m -u pgpool pool_passwd  "{{ db_pgpool_password }}"
-      become: true
-      become_user: root
-
-    - name: Generate pool_passwd for postgres
-      shell: pg_md5 -p -m -u postgres  "{{ db_postgres_password }}"
-      become: true
-      become_user: root
-
-    - name: Copy pgpool_node_id
-      template:
-        src: pgpool_node_id.j2
-        dest: /etc/pgpool-II/pgpool_node_id
-        owner: postgres
-        group: postgres
-        mode: 0600
 
     - name: Copy template pool_hba.conf.j2
       template:
@@ -142,3 +111,40 @@
       become_user: postgres
 
   tags: pgpoolConf
+
+- block:
+    - name: Copy failover.sh
+      copy:
+        src: failover.sh
+        dest: /etc/pgpool-II/failover.sh
+        owner: postgres
+        group: postgres
+        mode: 0755
+
+    - name: Copy follow_master.sh
+      copy:
+        src: follow_master.sh
+        dest: /etc/pgpool-II/follow_master.sh
+        owner: postgres
+        group: postgres
+        mode: 0755
+  tags: scripts
+
+- block:
+    - name: Copy recovery_1st_stage
+      copy:
+        src: recovery_1st_stage
+        dest: '{{ pgdata }}/recovery_1st_stage'
+        owner: postgres
+        group: postgres
+        mode: 0755
+
+    - name: pgpool_remote_start
+      copy:
+        src: pgpool_remote_start
+        dest: '{{ pgdata }}/pgpool_remote_start'
+        owner: postgres
+        group: postgres
+        mode: 0755
+  when: inventory_hostname == groups['pgsqlPrimary'][0]
+  tags: scripts
