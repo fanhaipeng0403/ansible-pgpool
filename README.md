@@ -3,7 +3,7 @@ https://blog.csdn.net/qq_37481017/article/details/124933816
 
 分发SSH Key
 # 如果主备服务器密码一致，使用如下
-ansible-playbook -k generate-key-use-password.yaml
+ansible-playbook -k generate-key-use-password.yml -i hosts-pgsql-ha
 
 
 # 如果主备节点密码不一致，则为每台节点手动生成
