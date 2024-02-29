@@ -20,7 +20,7 @@ ansible-playbook postgresql-ha.yaml -i hosts-pgsql-ha
 
 - **查看节点状态**
 ``` bash
-psql -h '172.16.251.184' -p '' -U pgpool postgres -c "show pool_nodes"
+psql -h '172.16.251.184' -p '9999' -U pgpool postgres ;
 ```
 
 - **恢复指定node**
@@ -29,5 +29,5 @@ psql -h '172.16.251.184' -p '' -U pgpool postgres -c "show pool_nodes"
 # 节点故障也可使用该命令恢复启动节点，恢复时间随数据容量增大
 
 su - postgres
-pcp_recovery_node -h 'yourVIP' -p 9898 -U pgpool -n 1
+pcp_recovery_node -h '172.16.251.184' -p 9898 -U pgpool -n 1
 ```
