@@ -20,7 +20,7 @@ ansible-playbook postgresql-ha.yaml -i hosts-pgsql-ha
 
 - **查看节点状态**
 ``` bash
-psql -h '172.16.0.31' -p '9999' -U pgpool postgres -c "show pool_nodes"
+psql -h '172.16.251.184' -p '' -U pgpool postgres -c "show pool_nodes"
 ```
 
 - **恢复指定node**
