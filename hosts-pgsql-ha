@@ -23,7 +23,6 @@ db_pgpool_password="changeit"
 db_repl_password="changeit"
 pgpool_pcp_password="changeit"
 
-pool_decryption_key="some string"
 timezone="Asia/Shanghai"
 
 [all:vars]

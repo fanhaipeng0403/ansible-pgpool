@@ -81,19 +81,13 @@
         group: postgres
         mode: 0600
 
-    - name: Create .pgpoolkey file with pool_decryption_key variable
-      copy:
-        content: "{{ pool_decryption_key }}"
-        dest: "~/.pgpoolkey"
-        mode: "0600"
-
     - name: Generate pool_passwd for pgpool
-      shell: pg_enc -m -k ~/.pgpoolkey -u pgpool "{{ db_pgpool_password }}"
+      shell: pg_md5 -p -m -u pgpool pool_passwd  "{{ db_pgpool_password }}"
       become: true
       become_user: root
 
     - name: Generate pool_passwd for postgres
-      shell: pg_enc -m -k ~/.pgpoolkey -u postgres "{{ db_postgres_password }}"
+      shell: pg_md5 -p -m -u postgres  "{{ db_postgres_password }}"
       become: true
       become_user: root
 
