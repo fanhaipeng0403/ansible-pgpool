@@ -14,7 +14,6 @@ pgsqlPrimary
 pgsqlStandby
 
 [pgsqlHA:vars]
-CIDR="0.0.0.0/0"
 VIP="172.16.251.184"
 interface="eth0"
 
