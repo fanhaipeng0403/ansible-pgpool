@@ -15,7 +15,7 @@
       }
   tasks:
   - name: Copy template .pgpass
-    include_tasks: roles/postgresql/tasks/pgpass.yaml
+    include_tasks: roles/postgresql/tasks/pgpass.yaml #设置postgres用户互相免密
   - name: start pgpool
     systemd:
       name: pgpool-II

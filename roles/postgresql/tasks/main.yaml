@@ -26,6 +26,8 @@
     - pgsql_online
 
 
+#5、创建归档目录和日志目录
+# https://blog.csdn.net/qq_37481017/article/details/124933816
 - name: Create some directory for pgsql
   file:
     path: "{{ item }}"
@@ -141,3 +143,6 @@
         name: postgresql-13
         state: restarted
   tags: primaryConf
+  when: inventory_hostname in groups['pgsqlPrimary']
+  #https://blog.csdn.net/qq_37481017/article/details/124933816
+  #以下操作只需要在server1机器执行、以postgres用户

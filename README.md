@@ -31,3 +31,8 @@ psql -h '172.16.251.184' -p '9999' -U pgpool postgres ;
 su - postgres
 pcp_recovery_node -h '172.16.251.184' -p 9898 -U pgpool -n 1
 ```
+
+
+# TODO
+#follow_primary是否改名了
+# 修改escalation文件
