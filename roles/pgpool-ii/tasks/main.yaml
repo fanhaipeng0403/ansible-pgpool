@@ -97,12 +97,12 @@
       become_user: postgres
 
     - name: Generate pool_passwd for pgpool
-      shell: sudo pg_enc -m -k ~/.pgpoolkey -u pgpool "{{ db_pgpool_password }}"
+      shell: pg_enc -m -k ~/.pgpoolkey -u pgpool "{{ db_pgpool_password }}"
       become: true
       become_user: postgres
 
     - name: Generate pool_passwd for postgres
-      shell: sudo pg_enc -m -k ~/.pgpoolkey -u postgres "{{ db_postgres_password }}"
+      shell: pg_enc -m -k ~/.pgpoolkey -u postgres "{{ db_postgres_password }}"
       become: true
       become_user: postgres
 
