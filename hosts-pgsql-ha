@@ -2,11 +2,11 @@
 127.0.0.1
 
 [pgsqlPrimary]
-10.247.84.137 hostname="node1" ansible_user=root ansible_password=root
+172.16.251.184 hostname="node1" ansible_user=root ansible_password=Genhao25
 
 [pgsqlStandby]
-10.247.84.170 hostname="node2" ansible_user=root ansible_password=root
-10.247.84.149 hostname="node3" ansible_user=root ansible_password=root
+172.16.251.183 hostname="node2" ansible_user=root ansible_password=Genhao25
+172.16.251.182 hostname="node3" ansible_user=root ansible_password=Genhao25
 
 
 [pgsqlHA:children]
@@ -15,7 +15,7 @@ pgsqlStandby
 
 [pgsqlHA:vars]
 CIDR="0.0.0.0"
-VIP="10.247.84.137"
+VIP="172.16.251.184"
 interface="eth0"
 
 db_postgres_password="changeit"
