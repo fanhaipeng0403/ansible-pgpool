@@ -1,3 +1,4 @@
+# 关闭防火墙
 - name: Remove firewalld
   yum:
     name:
@@ -6,6 +7,7 @@
       - python-firewall
     state: absent
 
+# 安装
 - block:
     - name: Install pgsql repo online
       yum:
@@ -26,43 +28,19 @@
     - pgsql_online
 
 
-#5、创建归档目录和日志目录
-# https://blog.csdn.net/qq_37481017/article/details/124933816
-- name: Create some directory for pgsql
-  file:
-    path: "{{ item }}"
-    owner: postgres
-    group: postgres
-    mode: 0700
-    state: directory
-  with_items:
-    - "{{ pgdata }}"
-    - "{{ pgArchiveDir }}"
-  tags:
-    - pgsql_install
-    - pgsql_online
-
-
+# 创建归档目录和日志目录
 - block:
-    - name: Set authorized key for postgres
-      authorized_key:
-        user: postgres
-        state: present
-        key: "{{ item }}"
-      with_file:
-        - "~/.ssh/id_rsa.pub"
-
-    - name: Copy private key for postgres
-      copy:
-        src: "~/.ssh/id_rsa"
-        dest: "{{ pghome }}/.ssh/id_rsa"
+    - name: Create some directory for pgsql
+      file:
+        path: "{{ item }}"
         owner: postgres
         group: postgres
-        mode: 0600
-  tags: sshkey
+        mode: 0700
+        state: directory
+      with_items:
+        - "{{ pgdata }}"
+        - "{{ pgArchiveDir }}"
 
-
-- block:
     - name: Create PGDATA directory
       file:
         path: '{{ pgdata }}'
@@ -80,6 +58,7 @@
 
 
 - block:
+    # 初始化数据库
     - name: Check if file exists in the "{{ pgdata }}"
       stat:
         path: "{{ pgdata }}/postgresql.conf"
@@ -91,6 +70,7 @@
       become_user: postgres
       when: not pgdata_check.stat.exists
 
+    #修改postgresql.conf文件
     - name: Copy template postgresql-primary.conf.j2
       template:
         src: postgresql-primary.conf.j2
@@ -99,6 +79,7 @@
         group: postgres
         mode: 0600
 
+    # 创建数据库用户
     - name: start pgsql
       systemd:
         name: postgresql-13
@@ -138,10 +119,12 @@
     - name: Copy template pg_hba.conf.j2
       include_tasks: pg_hba.yaml
 
+    # 启动数据库
     - name: restart pgsql
       systemd:
         name: postgresql-13
         state: restarted
+
   tags: primaryConf
   when: inventory_hostname in groups['pgsqlPrimary']
   #https://blog.csdn.net/qq_37481017/article/details/124933816
