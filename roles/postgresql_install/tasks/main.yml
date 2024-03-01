@@ -19,7 +19,7 @@
 
 - name:  Install Postgresql 14
   yum:
-    name: postgresql-14-server
+    name: postgresql14-server
     state: present
 
 # systemctl list-units --type=service
