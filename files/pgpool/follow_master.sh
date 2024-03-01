@@ -38,7 +38,7 @@ PGPOOL_PATH=/usr/bin
 PCP_PORT=9898
 REPL_SLOT_NAME=${NODE_HOST//[-.]/_}
 POSTGRESQL_STARTUP_USER=postgres
-SSH_KEY_FILE=id_rsa_pgpool
+SSH_KEY_FILE=id_rsa
 SSH_OPTIONS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/${SSH_KEY_FILE}"
 
 echo follow_primary.sh: start: Standby node ${NODE_ID}

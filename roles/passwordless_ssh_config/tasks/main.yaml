@@ -51,13 +51,13 @@
 
 
 # from the documentation https://www.pgpool.net/docs/43/en/html/example-cluster.html#EXAMPLE-CLUSTER-PRE-SETUP
-# we need to enable passwordless ssh on all server with a key named id_rsa_pgpool, the default name of the key
+# we need to enable passwordless ssh on all server with a key named id_rsa, the default name of the key
 # used by the failover.sh, follow_master.sh, recovery_1st_stage and pgpool_remote_start scripts
-- name: ssh passwordless with id_rsa_pgpool 
+- name: ssh passwordless with id_rsa
   command: sshpass -p {{ postgres_os_password_cleartext }} ssh-copy-id -i ~/.ssh/{{ ssh_key_name }} -o StrictHostKeyChecking=no postgres@{{ item }}
   with_items: "{{ groups['masters'] }}"
 
-- name: ssh passwordless with id_rsa_pgpool for user postgres
+- name: ssh passwordless with id_rsa for user postgres
   command: sshpass -p {{ postgres_os_password_cleartext }} ssh-copy-id -i ~/.ssh/{{ ssh_key_name }} -o StrictHostKeyChecking=no postgres@{{ item }}
   with_items: "{{ groups['masters'] }}"
   become: true
