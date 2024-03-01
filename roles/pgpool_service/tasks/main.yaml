@@ -1,10 +1,10 @@
 ---
 
-- name: Crea il servizio pgpool2
+- name: create service pgpool-II
   template:
-    src: services/pgpool2.service.j2
-    dest: /lib/systemd/system/pgpool2.service
+    src: services/pgpool-II.service.j2
+    dest: /lib/systemd/system/pgpool-II.service
     owner: root
     group: root
     mode: '0644'
-  notify: Restart pgpool2
+  notify: Restart pgpool-II

@@ -14,11 +14,11 @@
 
     - role: postgresql_service
 
-    - role: pgpool2_install
+    - role: pgpool-II_install
 
     - role: postgresql_data_volume
     
-    - role: pgpool2_config
+    - role: pgpool-II_config
     
     - role: passwordless_ssh_config
 
