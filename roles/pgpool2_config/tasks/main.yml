@@ -1,0 +1,101 @@
+---
+
+- name: Configure | Upload pgpool.conf
+  template:
+    src: pgpool.conf.j2
+    dest: "{{ pgpool_home_directory }}/pgpool.conf"
+    backup: true
+    owner: "postgres"
+    mode: 0775
+
+- name: Configure | Upload pool_hba.conf
+  template:
+    src: pool_hba.conf.j2
+    dest: "{{ pgpool_home_directory }}/pool_hba.conf"
+    owner: "postgres"
+    mode: 0775
+  when: 
+    - pgpool_enable_pool_hba | bool 
+    - pgpool_pool_hba_entries | length > 0
+
+- name: Replace content of /etc/pgpool2/follow_master.sh
+  template:
+    dest: "{{ pgpool_home_directory }}/follow_master.sh"
+    src: "follow_master.sh.j2"
+    owner: "postgres"
+    group: "postgres"
+    mode: '0777'
+
+- name: Replace content of /etc/pgpool2/failover.sh
+  template:
+    dest: "{{ pgpool_home_directory }}/failover.sh"
+    src: failover.sh.j2
+    owner: "postgres"
+    group: "postgres"
+    mode: '0777'
+
+- name: Replace content of /etc/pgpool2/escalation.sh
+  template:
+    dest: "{{ pgpool_home_directory }}/escalation.sh"
+    src: escalation.sh.j2
+    owner: "postgres"
+    group: "postgres"
+    mode: '0777'
+
+- name: Configure | Generate pool_passwd file using md5 auth method
+  shell:
+    cmd: |
+      pg_md5 --md5auth --username={{ item.username }} {{ item.password }}
+  loop: "{{ pgpool_passwd_users_md5 }}"
+  when: pgpool_passwd_use_md5 | bool
+
+- name: Configure .pgpass file for postgres user
+  template:
+    src: pgpass.j2
+    dest: "{{ pgpool_postgresql_home_directory }}/.pgpass"
+    owner: "postgres"
+    group: "postgres"
+    mode: 0600
+    trim_blocks: no
+  when: pgpool_pgpass_entries | length > 0
+  #shell:
+  #  cmd: |
+  #    sed 's/.*/*:*:*:&/' {{ pgpool_pool_passwd }} | sed 's/*:*:*:repl/replication:repl/' > {{ pgpool_postgresql_home_directory }}/.pgpass
+  #    chmod 600 {{ pgpool_postgresql_home_directory }}/.pgpass
+  #    chown postgres:postgres {{ pgpool_postgresql_home_directory }}/.pgpass
+
+- name: Configure pcp.conf
+  shell:
+    cmd: |
+      echo 'pgpool:'`pg_md5 {{ pgpool_pcp_password }}` >> {{ pgpool_home_directory }}/pcp.conf
+      chmod 775 {{ pgpool_home_directory }}/pcp.conf
+  #with_items: "{{ pgpool_passwd_users_md5 }}"
+
+- name: Configure | Upload .pcppass file (postgres)
+  template:
+    src: pcppass.j2
+    dest: "{{ pgpool_postgresql_home_directory }}/.pcppass"
+    owner: "postgres"
+    group: "postgres"
+    mode: 0600
+
+#- name: Configure | Upload .pcppass file (pgpool)
+#  become: true
+#  become_user: postgres
+#  shell:
+#    cmd: |
+#      echo 'localhost:9898:pgpool::'`pg_md5 {{ pgpool_password }}` > ~/.pcppass
+#      echo '{{ pgpool_delegate_IP }}:9898:pgpool:'`pg_md5 {{ pgpool_password }}` >> ~/.pcppass
+#      chmod 600 ~/.pcppass
+
+- name: configure pgpool_node_id on each node 
+  shell: "echo {{ pgpool_node_id }} > {{ pgpool_home_directory }}/pgpool_node_id"
+  #debug:
+  #  msg: "The index of {{ inventory_hostname }} is {{ ansible_play_hosts.index(inventory_hostname) }}"  
+  #  var: ansible_host
+    #var: ansible_all_ipv4_addresses[0]
+  #  msg: "Host: {{ item.0 }} (Index: {{ item.1 }})"
+  #shell: "echo {{ ansible_play_hosts.index(inventory_hostname) }} > {{ pgpool_home_directory }}/pgpool_node_id"
+  #with_indexed_items: "{{ ansible_play_hosts_all }}"
+  #when: ansible_host == ansible_all_ipv4_addresses[0]
+  #when: ansible_default_ipv4.address in ansible_host

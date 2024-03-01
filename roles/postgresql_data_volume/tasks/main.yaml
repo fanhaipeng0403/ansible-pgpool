@@ -1,0 +1,46 @@
+---
+
+- name: Avoid use of "/dev/sda"
+  fail:
+    msg: "Failing because use of main partition /dev/sda is not allowed"
+  when: postgres_data_volume_name == "/dev/sda"
+
+- name: Partition the disk using fdisk
+  raw: "echo -e 'n\np\n\n\n\nt\n8e\nw' | fdisk {{ postgres_data_volume_name }}"
+  ignore_errors: true  # Ignore errors in case the partition table is already created
+
+- name: Reload partition table
+  command: "partprobe -s {{ postgres_data_volume_name }}"
+
+- name: Create Physical Volume
+  command: "pvcreate {{ pv_name }}"
+
+- name: Create Volume Group
+  command: "vgcreate vg_data {{ pv_name }}"
+
+- name: Create Logical Volume
+  raw: "lvcreate -n lv_data vg_data -l +100%FREE"
+
+- name: Format the Logical Volume with XFS
+  command: "mkfs.xfs /dev/vg_data/lv_data"
+
+- name: Create a mount point for the filesystem
+  command: "mkdir -p {{ pgpool_postgresql_home_directory }}"
+  ignore_errors: true  # Ignore errors in case the folder is already created
+
+- name: Add entry to /etc/fstab
+  lineinfile:
+    path: "/etc/fstab"
+    line: "/dev/vg_data/lv_data {{ pgpool_postgresql_home_directory }} xfs defaults 0 0"
+    state: present
+
+- name: Mount the filesystem
+  command: "mount -a"
+
+- name: Change ownership of postgresql home directory
+  command: "chown postgres:postgres {{ pgpool_postgresql_home_directory }}"
+
+- name: Update home directory for postgres user
+  command:
+    cmd: usermod -d /postgresql postgres
+  become: true

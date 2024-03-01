@@ -1,0 +1,51 @@
+- name: Install and configure Cluster Postgresql14 on nodes
+  hosts: masters 
+  become: true
+  gather_facts: true 
+  vars_files:
+    - "{{ playbook_dir }}/vars/variables.yaml"
+  roles:
+    
+    - role: update_os
+    
+    - role: set_hosts
+
+    - role: postgresql_install
+
+    - role: postgresql_service
+
+    - role: pgpool2_install
+
+    - role: postgresql_data_volume
+    
+    - role: pgpool2_config
+    
+    - role: passwordless_ssh_config
+
+    - role: log_config
+
+    - role: pgpool_service
+
+- name: Run initdb_install on node1
+  hosts: postgres1.local
+  become: true
+  gather_facts: true
+  vars_files:
+    - "{{ playbook_dir }}/vars/variables.yaml"
+  roles:
+    - role: postgresql_config
+
+- name: Restart all remote Linux systems
+  hosts: all
+  tasks:
+    - name: Reboot the remote system
+      reboot:
+
+- name: Verify pgpool is running
+  hosts: masters
+  become: true
+  gather_facts: true
+  vars_files:
+    - "{{ playbook_dir }}/vars/variables.yaml"
+  roles:
+    - role: verify

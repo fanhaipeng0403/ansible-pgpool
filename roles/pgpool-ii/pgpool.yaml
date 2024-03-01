@@ -1,6 +1,0 @@
-- hosts: 
-    - pgsqlPrimary
-    - pgsqlStandby
-  roles:
-    - { role: pgpool-ii}
-

@@ -1,0 +1,237 @@
+# network interface
+network_interface_name: enp0s8
+pgpool_primary_node_ip: 172.16.122.100
+# pcp users
+pgpool_pcp_password: "pgpool"
+postgres_os_password_cleartext: system
+postgres_os_password: "$6$1ks0hgdv6tKOVDqV$6T.nqkEe.6Vs6jMea2yXP0gruEqub1U0wG6G7.KF2fEPOW.U7BWqMh6fhqXxR5ZU3c5U7POmbW4Gj.bTGuglA1"
+
+
+# key name
+ssh_key_name : id_rsa_pgpool
+# db roles passwords
+dbrole_pgpool_password: "123"
+dbrole_repl_password: "123"
+dbrole_postgres_password: "123"
+
+# pool_passwd file
+pgpool_passwd_use_md5: true
+pgpool_passwd_users_md5:
+  - username: postgres
+    password: "{{ dbrole_postgres_password }}"
+  - username: repl
+    password: "{{ dbrole_repl_password }}"
+  - username: pgpool
+    password: "{{ dbrole_pgpool_password }}"
+
+
+
+# postgres options
+pg_home: /usr/lib/postgresql/14
+pg_archive_dir: "{{pgpool_postgresql_home_directory}}/archive"
+
+# define entries in pg_hba.conf file
+# allow access to all users providing a correct password 
+# from hosts belonging to the same net as the postgres server
+pg_hba_entries:
+  - type: host
+    database: all
+    user: all
+    address: 192.168.56.0/24
+    #method: trust
+    method: md5
+  - type: host
+    database: replication
+    user: all
+    address: 192.168.56.0/24
+    #method: trust
+    method: md5
+
+# .pgpass contains password, plain text, that allows for 
+# passwordless execution of psql commands
+pgpool_pgpass_entries:
+  - hostname: "*"
+    port: "*"
+    database: "*"
+    user: "postgres"
+    password: "{{ dbrole_postgres_password }}"
+  - hostname: "*"
+    port: "*"
+    database: "replication"
+    user: "repl"
+    password: "{{ dbrole_repl_password }}"
+  - hostname: "*"
+    port: "*"
+    database: "*"
+    user: pgpool
+    password: "{{ dbrole_pgpool_password }}"
+ 
+# pgpool conf
+pgpool_backend_clustering_mode: streaming_replication
+pgpool_user: pgpool
+pgpool_postgresql_home_directory: /postgresql
+pgpool_postgresql_data_directory: "{{ pgpool_postgresql_home_directory }}/pg_data"
+pgpool_if_cmd_path: 
+# pgpool Connection Settings
+pgpool_listen_addresses: '*'
+pgpool_port: 5432
+pgpool_listen_backlog_multiplier: 2
+pgpool_reserved_connections: 0
+
+pgpool_home_directory: /etc/pgpool2
+
+pgpool_pool_passwd: "{{ pgpool_home_directory }}/pool_passwd"
+pgpool_pid_file_name: /var/run/postgresql/pgpool.pid
+pgpool_logdir: /var/log/pgpool
+# pgpool Communication Manager Connection Settings
+pgpool_pcp_listen_addresses: '*'
+pgpool_pcp_port: 9898
+
+pgpool_backend_servers:
+  - hostname: postgres1.local
+    port: 5433
+    weight: 1
+    data_directory: "{{ pgpool_postgresql_data_directory }}"
+    flag: ALLOW_TO_FAILOVER
+    application_name: postgres1.local
+
+  - hostname: postgres2.local
+    port: 5433
+    weight: 1
+    data_directory: "{{ pgpool_postgresql_data_directory }}"
+    flag: ALLOW_TO_FAILOVER
+    application_name: postgres2.local
+
+  - hostname: postgres3.local
+    port: 5433
+    weight: 1
+    data_directory: "{{ pgpool_postgresql_data_directory }}"
+    flag: ALLOW_TO_FAILOVER
+    application_name: postgres3.local
+# authentication 
+pgpool_enable_pool_hba: 'on'
+# clients that are allowed to access pgpool
+pgpool_pool_hba_entries:
+  - type: host
+    database: all
+    user: pgpool
+    address: 192.168.56.0/24
+    #method: trust
+    method: md5
+  - type: host
+    database: all
+    user: postgres
+    address: 192.168.56.0/24
+    #method: trust
+    method: md5
+ 
+# logs
+pgpool_log_hostname: 'on'
+pgpool_log_statement: 'on'
+pgpool_log_error_verbosity: VERBOSE
+pgpool_log_per_node_statement: 'on'
+pgpool_log_min_messages: info
+pgpool_syslog_facility: LOCAL1
+pgpool_log_destination: syslog
+# connection_cache
+pgpool_connection_cache: 'on'
+# Pool
+pgpool_num_init_children: 1
+pgpool_max_pool: 4
+pgpool_serialize_accept: 'off'
+pgpool_child_life_time: 0
+pgpool_child_max_connections: 0
+pgpool_connection_life_time: 0
+pgpool_client_idle_limit: 300
+# load-balancing
+pgpool_load_balance_mode: 'off'
+pgpool_disable_load_balance_on_write: 'transaction' # one of 'transaction', 'trans_transaction' or 'always'
+pgpool_statement_level_load_balance: 'on'
+# running mode
+pgpool_sr_check_user: "{{ pgpool_user }}"
+pgpool_sr_check_period: 5
+#pgpool_sr_check_database: repmgr
+pgpool_follow_primary_command: "{{ pgpool_home_directory }}/follow_master.sh %d %h %p %D %m %H %M %P %r %R %N %S"
+# FAILOVER AND FAILBACK
+pgpool_failover_command: "{{ pgpool_home_directory }}/failover.sh %d %h %p %D %m %H %M %P %r %R %N %S"
+pgpool_failover_on_backend_error: 'off'
+pgpool_auto_failback: 'on'
+#wd escalation 
+pgpool_wd_escalation_command: "{{ pgpool_home_directory }}/escalation.sh"
+# Watchdog
+pgpool_use_watchdog: 'on'
+pgpool_delegate_IP: 192.168.56.40
+#pgpool_delegate_IP: 192.168.56.50
+pgpool_if_up_cmd: '/usr/bin/sudo /sbin/ip addr add $_IP_$/16 dev {{ network_interface_name }} label {{ network_interface_name }}:0'
+pgpool_if_down_cmd: '/usr/bin/sudo /sbin/ip addr del $_IP_$/16 dev {{ network_interface_name }}'
+pgpool_arping_path: '/usr/sbin' 
+pgpool_arping_cmd: '/usr/bin/sudo /usr/sbin/arping -U $_IP_$ -w 1 -I {{ network_interface_name }}'
+# Online Recovery
+pgpool_recovery_user: postgres
+pgpool_recovery_password: "{{ dbrole_postgres_password }}"
+pgpool_recovery_1st_stage_command: recovery_1st_stage
+pgpool_recovery_2nd_stage_command: ''
+pgpool_recovery_timeout: 90
+pgpool_client_idle_limit_in_recovery: 0
+
+pgpool_health_check_period: 5 
+pgpool_health_check_timeout: 30 
+pgpool_health_check_user: "{{ pgpool_user }}"
+pgpool_health_check_max_retries: 3
+
+pgpool_watchdog_settings:
+ 
+  - hostname: postgres1.local
+    wdport: 9000
+    pgpoolport: 5432
+    
+  - hostname: postgres2.local
+    wdport: 9000
+    pgpoolport: 5432
+
+  - hostname: postgres3.local
+    wdport: 9000
+    pgpoolport: 5432
+
+pgpool_heartbeat_destination: 
+  - hostname: 'postgres1.local' 
+    port: 9694 
+    device: ''
+
+  - hostname: 'postgres2.local'
+    port: 9694
+    device1: ''
+
+  - hostname: 'postgres3.local'
+    port: 9694
+    device: ''
+
+
+pgpool_pcp_socket_dir: /var/run/postgresql
+pgpool_socket_dir: /var/run/postgresql
+pgpool_wd_ipc_socket_dir: /var/run/postgresql
+## end pgpool.conf
+
+
+
+
+# .pcpass file: allows for the passwordless execution of pcp commands
+# the password is plain text and is not mandatory that the users here
+# are the same as the postgres ones
+
+pgpool_pcppass_entries:
+  - hostname: "{{ pgpool_delegate_IP }}"
+    port: 9898
+    user: pgpool
+    password: "{{ pgpool_pcp_password }}"
+  - hostname: "{{ pgpool_pcp_socket_dir }}" # allows using -h /var/run/pcp instead of 'localhost' 
+    port: 9898
+    user: pgpool
+    password: "{{ pgpool_pcp_password }}"
+  - hostname: 127.0.0.1
+    port: 9898
+    user: pgpool
+    password: "{{ pgpool_pcp_password }}"
+
+
+

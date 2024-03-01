@@ -1,0 +1,43 @@
+---
+- name: Start Pg-Pool II
+  systemd: 
+    name: pgpool2
+    state: started
+
+- name: Ensure PgPool port is running
+  wait_for: 
+    host: 0.0.0.0
+    port: "{{ pgpool_port }}"
+
+- name: Ensure PCP port is running
+  wait_for: 
+    host: 0.0.0.0
+    port: "{{ pgpool_pcp_port }}"
+
+- name: Show POOL_NODES
+  postgresql_query:
+    login_host: "{{ pgpool_delegate_IP }}"
+    login_user: "{{ pgpool_passwd_users_md5[0].username }}"
+    db: postgres
+    port: "{{ pgpool_port }}"
+    query: "SHOW POOL_NODES"
+  register: pool_status
+  become: true
+  become_user: "postgres"
+
+- name: Output pool status
+  debug:
+    msg:
+      "pool_status": "{{ pool_status.query_result }}"
+
+- name: Get Watchdog info
+  shell:
+    cmd: pcp_watchdog_info -h 127.0.0.1 -U pgpool -wv
+  become: true
+  become_user: "postgres"
+  register: watchdog_status
+
+- name: Output watchdog status
+  debug:
+    msg:
+      "watchdog_status": "{{ watchdog_status.stdout_lines }}"

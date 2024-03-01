@@ -1,0 +1,6 @@
+---
+- name: Restart pgpool2
+  systemd:
+    name: pgpool2
+    state: restarted
+    daemon_reload: yes

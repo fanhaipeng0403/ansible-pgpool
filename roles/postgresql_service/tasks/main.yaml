@@ -1,0 +1,18 @@
+---
+
+- name: Crea il servizio postgresql-14
+  template:
+    src: services/postgresql-14.service.j2
+    dest: /lib/systemd/system/postgresql-14.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Reload systemd manager configuration
+  systemd:
+    daemon_reload: true
+
+- name: Enable postgresql-14 service
+  systemd:
+    name: postgresql-14.service
+    enabled: true

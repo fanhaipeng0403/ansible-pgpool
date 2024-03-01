@@ -1,0 +1,5 @@
+pgpool_wd_priority: 2
+pgpool_node_id: 1
+postgres_data_volume_name: "/dev/sdb"
+pv_partition_number: 1
+pv_name: "{{ postgres_data_volume_name }}{{ pv_partition_number }}"

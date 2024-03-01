@@ -1,0 +1,8 @@
+CREATE ROLE pgpool WITH LOGIN; 
+CREATE ROLE repl WITH REPLICATION LOGIN; 
+ALTER ROLE pgpool WITH PASSWORD '{{dbrole_pgpool_password}}';
+ALTER ROLE repl WITH PASSWORD '{{dbrole_repl_password}}';
+ALTER ROLE postgres WITH PASSWORD '{{dbrole_postgres_password}}';
+GRANT pg_monitor TO pgpool;
+\c template1
+CREATE EXTENSION pgpool_recovery;

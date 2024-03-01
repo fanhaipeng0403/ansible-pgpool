@@ -1,0 +1,53 @@
+---
+
+- name: Initialize the Postgresql-14 database
+  become: true
+  become_user: postgres
+  command: /usr/lib/postgresql/14/bin/initdb -D /postgresql/pg_data/
+
+- name: Replace content of /postgresql/pg_data/postgresql.conf
+  template:
+    src: "postgresql.conf.j2"
+    dest: "/postgresql/pg_data/postgresql.conf"
+    backup: true
+    
+      
+- name: Replace content of /postgresql/pg_data/pg_hba.conf
+  template:
+    src: "pg_hba.conf.j2"
+    dest: "/postgresql/pg_data/pg_hba.conf"
+    backup: true
+
+- name: Replace content of /postgresql/pg_data/pgpool_remote_start
+  template:
+    dest: "/postgresql/pg_data/pgpool_remote_start"
+    src: pgpool_remote_start.j2
+    owner: postgres
+    group: postgres
+    mode: '0744'
+
+- name: Replace content of /postgresql/pg_data/recovery_1st_stage
+  template:
+    dest: "/postgresql/pg_data/recovery_1st_stage"
+    src: recovery_1st_stage.j2
+    owner: postgres
+    group: postgres
+    mode: '0744'
+     
+- name: Start postgresql-14 service
+  systemd:
+    name: postgresql-14.service
+    state: started
+
+# copythe sql script for user creation on remote
+- name: Template sql script
+  template:  
+    src: "users.sql.j2" 
+    dest: "{{pgpool_postgresql_data_directory}}/users.sql"
+# execute the script
+- name: Execute sql script
+  command: "psql -p 5433 -f {{ pgpool_postgresql_data_directory }}/users.sql"
+  become_user: postgres
+# remove the script on remote
+- name: Delete sql script
+  file: path="{{pgpool_postgresql_data_directory}}/users.sql" state=absent

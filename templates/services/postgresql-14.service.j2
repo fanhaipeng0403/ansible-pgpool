@@ -1,0 +1,22 @@
+[Unit]
+Description=PostgreSQL 14 Cluster
+After=syslog.target
+After=network.target backups.mount
+
+[Service]
+User=postgres
+Group=postgres
+Type=notify
+Environment=PGDATA=/postgresql/pg_data
+# Disable OOM kill on the postmaster
+OOMScoreAdjust=-1000
+Environment=PG_OOM_ADJUST_FILE=/proc/self/oom_score_adj
+Environment=PG_OOM_ADJUST_VALUE=0
+ExecStart=/usr/lib/postgresql/14/bin/postmaster -D ${PGDATA}
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGINT
+SyslogFacility=local0
+
+[Install]
+WantedBy=multi-user.target

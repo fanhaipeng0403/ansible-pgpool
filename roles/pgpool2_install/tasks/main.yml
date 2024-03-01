@@ -1,0 +1,20 @@
+---
+- name: Installa pgpool2 e le dipendenze
+  yum:
+    name:
+      - pgpool2
+      - postgresql-14-pgpool2
+      - net-tools
+      - arping
+    state: present
+
+- name: Abilita il servizio pgpool2
+  systemd:
+    name: pgpool2.service
+    enabled: yes
+
+- name: Ferma il servizio pgpool2
+  systemd:
+    name: pgpool2.service
+    state: stopped
+

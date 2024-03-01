@@ -1,0 +1,36 @@
+---
+
+- name: update /etc/rsyslog.d/50-default.conf
+  ansible.builtin.blockinfile:
+    block: "{{ lookup('ansible.builtin.file', '{{ playbook_dir }}/files/logs/50-default.conf') }}"
+    path: /etc/rsyslog.d/50-default.conf
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    backup: yes
+
+- name: update /etc/logrotate.d/rsyslog
+  ansible.builtin.blockinfile:
+    block: "{{ lookup('ansible.builtin.file', '{{ playbook_dir }}/files/logs/rsyslog') }}"
+    path: /etc/logrotate.d/rsyslog
+    insertbefore: "BOF"
+    marker: ""
+    backup: yes
+  notify: Restart rsyslog
+
+- name: Replace content of /usr/lib/tmpfiles.d/postgresql.conf
+  copy:
+    dest: "/usr/lib/tmpfiles.d/postgresql.conf"
+    src: "{{ playbook_dir }}/files/tmpfiles/postgresql.conf"
+    owner: postgres
+    group: postgres
+    mode: '0744'
+
+- name: Replace content of /usr/lib/tmpfiles.d/pgpool2.conf
+  copy:
+    dest: "/usr/lib/tmpfiles.d/pgpool2.conf"
+    src: "{{ playbook_dir }}/files/tmpfiles/pgpool2.conf"
+    owner: postgres
+    group: postgres
+    mode: '0744'
+
+- name: execute some log related shell commands
+  ansible.builtin.script: "{{ playbook_dir }}/scripts/config.sh"

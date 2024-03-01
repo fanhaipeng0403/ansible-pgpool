@@ -1,0 +1,87 @@
+---
+
+- name: Aggiungi repository Postgresql
+  copy:
+    content: "deb http://apt.postgresql.org/pub/repos/apt {{ ansible_lsb.codename }}-pgdg main"
+    dest: /etc/apt/sources.list.d/pgdg.list
+
+- name: Importa chiave GPG di Postgresql
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: Aggiorna il repository dopo aver aggiunto il repository Postgresql
+  yum:
+    update_cache: yes
+
+- name: Installa Postgresql 14
+  yum:
+    name: postgresql-14
+    state: present
+
+- name: Disabilita il servizio postgresql
+  systemd:
+    name: postgresql.service
+    enabled: no
+
+- name: Disabilita il servizio postgresql@14-main
+  systemd:
+    name: postgresql@14-main.service
+    enabled: no
+
+- name: Ferma il servizio postgresql-14
+  systemd:
+    name: postgresql@14-main.service
+    state: stopped
+
+# home_directory/tasks/main.yml
+
+- name: Remove /var/lib/postgresql/14 directory
+  file:
+    path: /var/lib/postgresql/14
+    state: absent
+
+- name: Remove /etc/postgresql/14 directory
+  file:
+    path: /etc/postgresql/14
+    state: absent
+
+#- name: Create /postgresql directory
+#  file:
+#    path: /postgresql
+#    state: directory
+#    owner: postgres
+#    group: postgres
+#    mode: '0755'
+
+- name: Create /archive directory
+  file:
+    path: /postgresql/archive
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: '0755'    
+
+#- name: Update home directory for postgres user
+#  command:
+#    cmd: usermod -d /postgresql postgres
+#  become: true
+  
+- name: Update postgres user password
+  user:
+    name: postgres
+    password: "{{ postgres_os_password }}"  # The new password you want to set
+  register: user_updated
+
+- name: >-
+    Add postgres user to sudoers. thanks to the community.general.sudoers module, 
+    that is part of the "community.general collection", version 7.5.0, installed
+    with the ansible package, if only ansible-core is present, then the collection needs
+    to be installed with "ansible-galaxy collection install community.general"
+  community.general.sudoers:
+    name: postgres-sudoers
+    user: postgres
+    commands: ALL
+
+
+
