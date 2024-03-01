@@ -1,26 +1,28 @@
 ---
-
-- name: Aggiorna il repository del sistema
+- name: Update system repository
   yum:
     update_cache: yes
-- name: Effettua l'upgrade dei pacchetti
+
+- name: Upgrade packages
   yum:
-    upgrade: yes
-- name: Rimuovi i pacchetti non necessari
+    name: '*'
+    state: latest
+
+- name: Remove unnecessary packages
   yum:
     autoremove: yes
 
-- name: Installa bash-completion
+- name: Install bash-completion
   yum:
-    name: bash-com*
+    name: 'bash-com*'
     state: present
 
-- name: Installa sshpass
+- name: Install sshpass
   yum:
     name: sshpass
     state: present
 
-- name: Installa psycopg2
+- name: Install psycopg2
   yum:
     name: python3-psycopg2
     state: present
