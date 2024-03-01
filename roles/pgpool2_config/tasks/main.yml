@@ -18,7 +18,7 @@
     - pgpool_enable_pool_hba | bool 
     - pgpool_pool_hba_entries | length > 0
 
-- name: Replace content of /etc/pgpool2/follow_master.sh
+- name: Replace content of /etc/pgpool-II/follow_master.sh
   template:
     dest: "{{ pgpool_home_directory }}/follow_master.sh"
     src: "follow_master.sh.j2"
@@ -26,7 +26,7 @@
     group: "postgres"
     mode: '0777'
 
-- name: Replace content of /etc/pgpool2/failover.sh
+- name: Replace content of /etc/pgpool-II/failover.sh
   template:
     dest: "{{ pgpool_home_directory }}/failover.sh"
     src: failover.sh.j2
@@ -34,7 +34,7 @@
     group: "postgres"
     mode: '0777'
 
-- name: Replace content of /etc/pgpool2/escalation.sh
+- name: Replace content of /etc/pgpool-II/escalation.sh
   template:
     dest: "{{ pgpool_home_directory }}/escalation.sh"
     src: escalation.sh.j2
