@@ -24,10 +24,11 @@
     group: postgres
     mode: '0744'
 
-- name: Replace content of /usr/lib/tmpfiles.d/pgpool2.conf
+#TODO
+- name: Replace content of /usr/lib/tmpfiles.d/pgpool-II.conf
   copy:
-    dest: "/usr/lib/tmpfiles.d/pgpool2.conf"
-    src: "{{ playbook_dir }}/files/tmpfiles/pgpool2.conf"
+    dest: "/usr/lib/tmpfiles.d/pgpool-II.conf"
+    src: "{{ playbook_dir }}/files/tmpfiles/pgpool-II.conf"
     owner: postgres
     group: postgres
     mode: '0744'
