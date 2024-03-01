@@ -1,6 +1,6 @@
 ---
 
-- name: Crea il servizio postgresql-14
+- name: Create the postgresql-14 service
   template:
     src: services/postgresql-14.service.j2
     dest: /lib/systemd/system/postgresql-14.service

@@ -1,5 +1,5 @@
 ---
-- name: Installa pgpool2 e le dipendenze
+- name:  Install pgpool2 and dependencies
   yum:
     name:
       - pgpool2
@@ -8,12 +8,12 @@
       - arping
     state: present
 
-- name: Abilita il servizio pgpool2
+- name: Enable pgpool2 service
   systemd:
     name: pgpool2.service
     enabled: yes
 
-- name: Ferma il servizio pgpool2
+- name:  Stop pgpool2 service
   systemd:
     name: pgpool2.service
     state: stopped
