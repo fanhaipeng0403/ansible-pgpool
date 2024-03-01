@@ -14,9 +14,9 @@
     state: present
 
 - name: install centos-release-scl-rh
-    yum:
-      name: centos-release-scl-rh
-      state: present
+  yum:
+    name: centos-release-scl-rh
+    state: present
       
 - name:  Add repository Postgresql
   yum_key:
