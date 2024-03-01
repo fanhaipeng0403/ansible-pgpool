@@ -9,21 +9,27 @@
 
 
 - name: Add repository Postgresql
-  copy:
-    content: "deb http://apt.postgresql.org/pub/repos/apt {{ ansible_lsb.codename }}-pgdg main"
-    dest: /etc/apt/sources.list.d/pgdg.list
+  yum:
+    name: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+    state: present
 
+- name: install centos-release-scl-rh
+    yum:
+      name: centos-release-scl-rh
+      state: present
+      
 - name:  Add repository Postgresql
-  apt_key:
+  yum_key:
     url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
     state: present
 
+
 - name: Update repository after adding Postgresql repository
-  apt:
+  yum:
     update_cache: yes
 
 - name:  Install Postgresql 14
-  apt:
+  yum:
     name: postgresql-14
     state: present
 
@@ -74,7 +80,7 @@
 #  command:
 #    cmd: usermod -d /postgresql postgres
 #  become: true
-  
+
 - name: Update postgres user password
   user:
     name: postgres
