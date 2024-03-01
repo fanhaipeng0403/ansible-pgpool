@@ -22,19 +22,11 @@
     name: postgresql-14-server
     state: present
 
-- name:  Disable postgresql service
-  systemd:
-    name: postgresql.service
-    enabled: no
-
-- name:  Disable postgresql@14-main service
-  systemd:
-    name: postgresql@14-main.service
-    enabled: no
+# systemctl list-units --type=service
 
 - name: Stop postgresql-14 service
   systemd:
-    name: postgresql@14-main.service
+    name: postgresql-14
     state: stopped
 
 # home_directory/tasks/main.yml
