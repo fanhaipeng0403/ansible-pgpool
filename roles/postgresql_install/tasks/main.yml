@@ -13,16 +13,6 @@
     name: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
     state: present
 
-- name: install centos-release-scl-rh
-  yum:
-    name: centos-release-scl-rh
-    state: present
-      
-- name:  Add repository Postgresql
-  yum_key:
-    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-    state: present
-
 
 - name: Update repository after adding Postgresql repository
   yum:
