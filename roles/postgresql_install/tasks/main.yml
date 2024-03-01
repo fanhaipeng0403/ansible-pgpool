@@ -1,4 +1,11 @@
 ---
+- name: Remove firewalld
+  yum:
+    name:
+      - firewalld
+      - firewalld-filesystem
+      - python-firewall
+    state: absent
 
 
 - name: Add repository Postgresql
@@ -6,31 +13,31 @@
     content: "deb http://apt.postgresql.org/pub/repos/apt {{ ansible_lsb.codename }}-pgdg main"
     dest: /etc/apt/sources.list.d/pgdg.list
 
-- name: Importa chiave GPG di Postgresql
+- name:  Add repository Postgresql
   apt_key:
     url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
     state: present
 
-- name: Aggiorna il repository dopo aver aggiunto il repository Postgresql
+- name: Update repository after adding Postgresql repository
   apt:
     update_cache: yes
 
-- name: Installa Postgresql 14
+- name:  Install Postgresql 14
   apt:
     name: postgresql-14
     state: present
 
-- name: Disabilita il servizio postgresql
+- name:  Disable postgresql service
   systemd:
     name: postgresql.service
     enabled: no
 
-- name: Disabilita il servizio postgresql@14-main
+- name:  Disable postgresql@14-main service
   systemd:
     name: postgresql@14-main.service
     enabled: no
 
-- name: Ferma il servizio postgresql-14
+- name: Stop postgresql-14 service
   systemd:
     name: postgresql@14-main.service
     state: stopped
