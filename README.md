@@ -9,7 +9,7 @@ ansible-playbook -k generate-key-use-password.yml  -i inventory.ini
 ansible-playbook postgresql14_install.yml -i inventory.ini
 
 替换
-172.16.122.100
-172.16.122.0
+172.16.3.168
+172.16.3.168.0
 
 
