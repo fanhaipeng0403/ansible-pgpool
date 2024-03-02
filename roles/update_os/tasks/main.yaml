@@ -3,11 +3,6 @@
   yum:
     update_cache: yes
 
-- name: Upgrade packages
-  yum:
-    name: '*'
-    state: latest
-
 - name: Remove unnecessary packages
   yum:
     autoremove: yes
