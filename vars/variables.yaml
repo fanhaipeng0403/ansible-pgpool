@@ -27,7 +27,7 @@ pgpool_passwd_users_md5:
 
 
 # postgres options
-pg_home: /usr/lib/postgresql/14
+pg_home: /usr/pgsql-14/
 pg_archive_dir: "{{pgpool_postgresql_home_directory}}/archive"
 
 # define entries in pg_hba.conf file

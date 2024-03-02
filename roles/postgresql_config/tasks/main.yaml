@@ -3,7 +3,7 @@
 - name: Initialize the Postgresql-14 database
   become: true
   become_user: postgres
-  command: /usr/lib/postgresql/14/bin/initdb -D /postgresql/pg_data/
+  command: /usr/pgsql-14/bin/initdb -D /postgresql/pg_data/
 
 - name: Replace content of /postgresql/pg_data/postgresql.conf
   template:

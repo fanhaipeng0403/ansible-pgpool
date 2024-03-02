@@ -12,7 +12,7 @@ Environment=PGDATA=/postgresql/pg_data
 OOMScoreAdjust=-1000
 Environment=PG_OOM_ADJUST_FILE=/proc/self/oom_score_adj
 Environment=PG_OOM_ADJUST_VALUE=0
-ExecStart=/usr/lib/postgresql/14/bin/postmaster -D ${PGDATA}
+ExecStart=/usr/pgsql-14/bin/postmaster -D ${PGDATA}
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=mixed
 KillSignal=SIGINT

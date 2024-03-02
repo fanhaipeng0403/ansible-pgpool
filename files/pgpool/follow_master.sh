@@ -30,7 +30,7 @@ OLD_PRIMARY_NODE_ID="$8"
 NEW_PRIMARY_NODE_PORT="$9"
 NEW_PRIMARY_NODE_PGDATA="${10}"
 
-PGHOME=/usr/lib/postgresql/14
+PGHOME=/usr/pgsql-14/
 ARCHIVEDIR=/postgresql/archive
 REPLUSER=repl
 PCP_USER=pgpool
