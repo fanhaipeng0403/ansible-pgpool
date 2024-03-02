@@ -1,9 +1,15 @@
 ---
 
+- name: Check if file exists in the "{{ pgdata }}"
+    stat:
+      path: "/postgresql/pg_data/"
+    register: pgdata_check
+
 - name: Initialize the Postgresql-14 database
   become: true
   become_user: postgres
   command: /usr/pgsql-14/bin/initdb -D /postgresql/pg_data/
+  when: not pgdata_check.stat.exists
 
   #    TODO 加了就不行???
  ########################
