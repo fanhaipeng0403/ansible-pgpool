@@ -27,7 +27,7 @@
 
 - name: Stop postgresql-14 service
   systemd:
-    name: postgresql-14
+    name: postgresql-14.service
     state: stopped
 
 # home_directory/tasks/main.yml
