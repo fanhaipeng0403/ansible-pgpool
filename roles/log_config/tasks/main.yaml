@@ -6,6 +6,7 @@
     path: /etc/rsyslog.d/50-default.conf
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
     backup: yes
+    create: yes
 
 - name: update /etc/logrotate.d/rsyslog
   ansible.builtin.blockinfile:
