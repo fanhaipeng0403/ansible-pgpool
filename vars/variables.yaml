@@ -1,6 +1,6 @@
 # network interface
 network_interface_name: enp0s8
-pgpool_primary_node_ip: 172.16.3.168
+pgpool_delegate_ip: 192.168.56.40 #IP地址中以192开头的地址属于私有IP地址范围。私有IP地址是指在内部网络中使用，不会直接在互联网上路由。
 # pcp users
 pgpool_pcp_password: "pgpool"
 postgres_os_password_cleartext: system
@@ -102,13 +102,7 @@ pgpool_backend_servers:
     flag: ALLOW_TO_FAILOVER
     application_name: postgres2.local
 
-  - hostname: postgres3.local
-    port: 5433
-    weight: 1
-    data_directory: "{{ pgpool_postgresql_data_directory }}"
-    flag: ALLOW_TO_FAILOVER
-    application_name: postgres3.local
-# authentication 
+# authentication
 pgpool_enable_pool_hba: 'on'
 # clients that are allowed to access pgpool
 pgpool_pool_hba_entries:
@@ -160,7 +154,8 @@ pgpool_auto_failback: 'on'
 pgpool_wd_escalation_command: "{{ pgpool_home_directory }}/escalation.sh"
 # Watchdog
 pgpool_use_watchdog: 'on'
-pgpool_delegate_IP: "{{ pgpool_primary_node_ip }}"
+pgpool_delegate_IP: "{{ pgpool_delegate_ip }}"
+
 #pgpool_delegate_IP: 192.168.56.50
 pgpool_if_up_cmd: '/usr/bin/sudo /sbin/ip addr add $_IP_$/16 dev {{ network_interface_name }} label {{ network_interface_name }}:0'
 pgpool_if_down_cmd: '/usr/bin/sudo /sbin/ip addr del $_IP_$/16 dev {{ network_interface_name }}'
@@ -189,9 +184,6 @@ pgpool_watchdog_settings:
     wdport: 9000
     pgpoolport: 5432
 
-  - hostname: postgres3.local
-    wdport: 9000
-    pgpoolport: 5432
 
 pgpool_heartbeat_destination: 
   - hostname: 'postgres1.local' 
@@ -202,9 +194,6 @@ pgpool_heartbeat_destination:
     port: 9694
     device1: ''
 
-  - hostname: 'postgres3.local'
-    port: 9694
-    device: ''
 
 
 pgpool_pcp_socket_dir: /var/run/postgresql
