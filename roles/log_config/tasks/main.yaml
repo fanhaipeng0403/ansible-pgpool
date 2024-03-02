@@ -15,6 +15,7 @@
     insertbefore: "BOF"
     marker: ""
     backup: yes
+    create: yes
   notify: Restart rsyslog
 
 - name: Replace content of /usr/lib/tmpfiles.d/postgresql.conf
@@ -25,7 +26,6 @@
     group: postgres
     mode: '0744'
 
-#TODO
 - name: Replace content of /usr/lib/tmpfiles.d/pgpool-II.conf
   copy:
     dest: "/usr/lib/tmpfiles.d/pgpool-II.conf"
