@@ -102,13 +102,7 @@ pgpool_backend_servers:
     flag: ALLOW_TO_FAILOVER
     application_name: postgres2.local
 
-  - hostname: postgres3.local
-    port: 5433
-    weight: 1
-    data_directory: "{{ pgpool_postgresql_data_directory }}"
-    flag: ALLOW_TO_FAILOVER
-    application_name: postgres3.local
-# authentication 
+# authentication
 pgpool_enable_pool_hba: 'on'
 # clients that are allowed to access pgpool
 pgpool_pool_hba_entries:
@@ -189,9 +183,6 @@ pgpool_watchdog_settings:
     wdport: 9000
     pgpoolport: 5432
 
-  - hostname: postgres3.local
-    wdport: 9000
-    pgpoolport: 5432
 
 pgpool_heartbeat_destination: 
   - hostname: 'postgres1.local' 
@@ -202,9 +193,6 @@ pgpool_heartbeat_destination:
     port: 9694
     device1: ''
 
-  - hostname: 'postgres3.local'
-    port: 9694
-    device: ''
 
 
 pgpool_pcp_socket_dir: /var/run/postgresql
