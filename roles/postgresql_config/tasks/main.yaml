@@ -1,9 +1,9 @@
 ---
 
 - name: Check if file exists in the "{{ pgdata }}"
-    stat:
-      path: "/postgresql/pg_data/"
-    register: pgdata_check
+  stat:
+    path: "/postgresql/pg_data/"
+  register: pgdata_check
 
 - name: Initialize the Postgresql-14 database
   become: true
