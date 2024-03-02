@@ -37,13 +37,13 @@ pg_hba_entries:
   - type: host
     database: all
     user: all
-    address: 172.16.3.168.0/24
+    address: 0.0.0.0/0
     #method: trust
     method: md5
   - type: host
     database: replication
     user: all
-    address: 172.16.3.168.0/24
+    address: 0.0.0.0/0
     #method: trust
     method: md5
 
@@ -115,13 +115,13 @@ pgpool_pool_hba_entries:
   - type: host
     database: all
     user: pgpool
-    address: 172.16.3.168.0/24
+    address: 0.0.0.0/0
     #method: trust
     method: md5
   - type: host
     database: all
     user: postgres
-    address: 172.16.3.168.0/24
+    address: 0.0.0.0/0
     #method: trust
     method: md5
  
