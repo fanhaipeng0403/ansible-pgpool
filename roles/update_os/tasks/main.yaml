@@ -14,5 +14,5 @@
 
 - name: Install psycopg2
   yum:
-    name: python3-psycopg2
+    name: psycopg2
     state: present

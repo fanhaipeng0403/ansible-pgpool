@@ -34,12 +34,12 @@
     - "{{ playbook_dir }}/vars/variables.yaml"
   roles:
     - role: postgresql_config
-
-- name: Restart all remote Linux systems
-  hosts: all
-  tasks:
-    - name: Reboot the remote system
-      reboot:
+#
+#- name: Restart all remote Linux systems
+#  hosts: all
+#  tasks:
+#    - name: Reboot the remote system
+#      reboot:
 
 - name: Verify pgpool is running
   hosts: masters
