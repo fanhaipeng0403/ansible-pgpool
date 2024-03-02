@@ -1,6 +1,8 @@
 # ansible playbook for installing postgres-pgool
 for pgpool version 4.3.x
 
+http://liuguangxuan.top/index.php/archives/40/
+
 sudo yum install epel-release -y
 sudo yum install ansible -y
 ansible-galaxy collection install community.general
