@@ -7,11 +7,6 @@
   yum:
     autoremove: yes
 
-- name: Install bash-completion
-  yum:
-    name: 'bash-com*'
-    state: present
-
 - name: Install sshpass
   yum:
     name: sshpass
