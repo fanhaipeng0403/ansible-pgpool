@@ -1,8 +1,4 @@
 ---
-- name: Start Pg-Pool II
-  systemd: 
-    name: pgpool-II
-    state: started
 
 - name: Ensure PgPool port is running
   wait_for: 

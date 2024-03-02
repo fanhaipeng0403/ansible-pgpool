@@ -8,3 +8,8 @@
     group: root
     mode: '0644'
   notify: Restart pgpool-II
+
+- name: Start Pg-Pool II
+  systemd:
+    name: pgpool-II
+    state: started
