@@ -5,13 +5,16 @@
   become_user: postgres
   command: /usr/pgsql-14/bin/initdb -D /postgresql/pg_data/
 
+  #    TODO 加了就不行
+ ########################
+
 - name: Replace content of /postgresql/pg_data/postgresql.conf
   template:
     src: "postgresql.conf.j2"
     dest: "/postgresql/pg_data/postgresql.conf"
     backup: true
-    
-      
+
+
 - name: Replace content of /postgresql/pg_data/pg_hba.conf
   template:
     src: "pg_hba.conf.j2"
@@ -34,6 +37,7 @@
     group: postgres
     mode: '0744'
      
+#    TODO
 - name: Start postgresql-14 service
   systemd:
     name: postgresql-14.service
