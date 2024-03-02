@@ -7,7 +7,7 @@
     state: present
 
 
-- name: Install pgpool-II-pg13-extensions
+- name: Install pgpool-II-pg14-extensions
   yum:
     name: pgpool-II-pg14-extensions
     disable_gpg_check: yes
@@ -17,7 +17,7 @@
   yum:
     name:
       - net-tools
-      - arping
+      - iputils
     state: present
 
 ### ????????
