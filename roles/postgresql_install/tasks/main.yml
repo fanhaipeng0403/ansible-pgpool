@@ -32,10 +32,10 @@
 
 # home_directory/tasks/main.yml
 
-- name: Remove /usr/pgsql-14/ directory
-  file:
-    path: /usr/pgsql-14/
-    state: absent
+#- name: Remove /usr/pgsql-14/ directory
+#  file:
+#    path: /usr/pgsql-14/
+#    state: absent
 
 - name: Remove /postgresql/pg_data directory
   file:
