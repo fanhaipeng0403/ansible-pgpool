@@ -36,11 +36,11 @@
 #  file:
 #    path: /usr/pgsql-14/
 #    state: absent
-
-- name: Remove /postgresql/pg_data directory
-  file:
-    path: /postgresql/pg_data
-    state: absent
+#
+#- name: Remove /postgresql/pg_data directory
+#  file:
+#    path: /postgresql/pg_data
+#    state: absent
 
 #- name: Create /postgresql directory
 #  file:
