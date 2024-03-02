@@ -8,9 +8,9 @@
     state: absent
 
 - name: Download the PostgreSQL repo RPM
-    get_url:
-      url: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-      dest: /tmp/pgdg-redhat-repo-latest.noarch.rpm
+  get_url:
+    url: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    dest: /tmp/pgdg-redhat-repo-latest.noarch.rpm
 
 - name: Install the PostgreSQL repo
   yum:
