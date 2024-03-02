@@ -5,7 +5,7 @@ Wants=postgresql-14.service
 
 [Service]
 User=postgres
-ExecStart=/usr/sbin/pgpool -n
+ExecStart=/usr/bin/pgpool -n
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
 StandardOutput=syslog
