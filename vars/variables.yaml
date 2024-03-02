@@ -8,7 +8,7 @@ postgres_os_password: "$6$1ks0hgdv6tKOVDqV$6T.nqkEe.6Vs6jMea2yXP0gruEqub1U0wG6G7
 
 
 # key name
-ssh_key_name : id_rsa
+ssh_key_name : id_rsa_pgpool
 # db roles passwords
 dbrole_pgpool_password: "123"
 dbrole_repl_password: "123"
