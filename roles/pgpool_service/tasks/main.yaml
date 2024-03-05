@@ -7,4 +7,12 @@
     owner: root
     group: root
     mode: '0644'
-  notify: Restart pgpool-II
+
+- name: Reload systemd manager configuration
+  systemd:
+    daemon_reload: true
+
+- name: Enable pgpool-II
+  systemd:
+    name: pgpool-II
+    enabled: true
