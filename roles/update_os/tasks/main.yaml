@@ -11,8 +11,3 @@
   yum:
     name: sshpass
     state: present
-
-- name: Install psycopg2
-  yum:
-    name: psycopg2
-    state: present
