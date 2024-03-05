@@ -18,7 +18,7 @@
 
     - role: postgresql_data_volume
 
-    - role: pg_ool-II_config
+    - role: pgpool-II_config
 
     - role: passwordless_ssh_config
 
