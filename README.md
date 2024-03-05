@@ -1,4 +1,5 @@
 https://www.cnblogs.com/xianghuaqiang/p/13887482.html
+https://github.com/davidepolli/ansible-pgpool
 # ansible playbook for installing postgres-pgool
 for pgpool version 4.3.x
 
