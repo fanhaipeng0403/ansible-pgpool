@@ -30,3 +30,33 @@ systemctl start pgpool-II
 journalctl -u pgpool-II -f
 
 
+
+ ip addr show | grep -i "192.168.56.40"
+
+ psql -h 127.0.0.1 -U postgres -p 5432
+ psql -h 192.168.56.40 -p 5432 -U postgres
+ psql -h 192.168.56.40 -p 9999 -U postgres
+
+
+ create table game_room
+ (
+     id                bigserial
+         primary key,
+     room_id           integer
+         unique,
+     sb                bigint,
+     bb                bigint,
+     min_buy_in        bigint,
+     max_buy_in        bigint,
+     timeout           integer,
+     max               integer,
+     level             smallint,
+     room_type         smallint,
+     sng_detail        json,
+     tournament_buy_in json,
+     keep_table_count  bigint,
+     room_bg           text,
+     table_bg          text,
+     is_available      boolean
+ );
+
