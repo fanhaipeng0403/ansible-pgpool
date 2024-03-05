@@ -74,7 +74,7 @@ pgpool_postgresql_data_directory: "{{ pgpool_postgresql_home_directory }}/pg_dat
 pgpool_if_cmd_path: 
 # pgpool Connection Settings
 pgpool_listen_addresses: '*'
-pgpool_port: 5432
+pgpool_port: 9999
 pgpool_listen_backlog_multiplier: 2
 pgpool_reserved_connections: 0
 
@@ -89,14 +89,14 @@ pgpool_pcp_port: 9898
 
 pgpool_backend_servers:
   - hostname: postgres1.local
-    port: 5433
+    port: 5432
     weight: 1
     data_directory: "{{ pgpool_postgresql_data_directory }}"
     flag: ALLOW_TO_FAILOVER
     application_name: postgres1.local
 
   - hostname: postgres2.local
-    port: 5433
+    port: 5432
     weight: 1
     data_directory: "{{ pgpool_postgresql_data_directory }}"
     flag: ALLOW_TO_FAILOVER
@@ -178,11 +178,11 @@ pgpool_watchdog_settings:
  
   - hostname: postgres1.local
     wdport: 9000
-    pgpoolport: 5432
+    pgpoolport: 9999
     
   - hostname: postgres2.local
     wdport: 9000
-    pgpoolport: 5432
+    pgpoolport: 9999
 
 
 pgpool_heartbeat_destination: 
