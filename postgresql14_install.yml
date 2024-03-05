@@ -52,12 +52,13 @@
 
 - name: Start_postgresql-14.service
   hosts: masters
-  systemd:
-    name: postgresql-14.service
-    state: started
+  tasks:
+   - systemd:
+      name: postgresql-14.service
+      state: started
 
-- name: Start_pgpool_servers
-  hosts: masters
-  systemd:
-    name: pgpool-II
-    state: started
+#- name: Start_pgpool_servers
+#  hosts: masters
+#  systemd:
+#    name: pgpool-II
+#    state: started
