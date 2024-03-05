@@ -18,7 +18,12 @@ ansible-playbook -k generate-key-use-password.yml  -i inventory.ini
 ansible-playbook postgresql14_install.yml -i inventory.ini
 
 
+cat /usr/lib/systemd/system/postgresql-14.service
 systemctl status postgresql-14.service
+journalctl -u postgresql-14.service -f
+
+cat /usr/lib/systemd/system/pgpool-II.service
 systemctl status pgpool-II
+journalctl -u pgpool-II -f
 
 
