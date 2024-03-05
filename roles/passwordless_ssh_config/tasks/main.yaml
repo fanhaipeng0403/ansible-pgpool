@@ -71,20 +71,3 @@
   with_items: "{{ groups['masters'] }}"
   become: true
   become_user: postgres
-
-
-- name: Replace content of /usr/lib/tmpfiles.d/postgresql.conf
-  copy:
-    dest: "/usr/lib/tmpfiles.d/postgresql.conf"
-    src: "{{ playbook_dir }}/files/tmpfiles/postgresql.conf"
-    owner: postgres
-    group: postgres
-    mode: '0744'
-
-- name: Replace content of /usr/lib/tmpfiles.d/pgpool-II.conf
-  copy:
-    dest: "/usr/lib/tmpfiles.d/pgpool-II.conf"
-    src: "{{ playbook_dir }}/files/tmpfiles/pgpool-II.conf"
-    owner: postgres
-    group: postgres
-    mode: '0744'
