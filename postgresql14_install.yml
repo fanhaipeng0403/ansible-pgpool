@@ -10,7 +10,7 @@
     
     - role: set_hosts
 
-
+    - role: log_config
 
     - role: postgresql_install
 
@@ -26,10 +26,8 @@
     - role: pgpool_service
 
 
-
     - role: passwordless_ssh_config
 
-    - role: log_config
 
 
 
