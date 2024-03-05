@@ -12,6 +12,7 @@
   systemd:
     daemon_reload: true
 
+
 - name: Enable pgpool-II
   systemd:
     name: pgpool-II

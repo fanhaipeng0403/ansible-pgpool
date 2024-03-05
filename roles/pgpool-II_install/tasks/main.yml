@@ -19,16 +19,3 @@
       - net-tools
       - iputils
     state: present
-
-### ????????
--
-- name: Enable pgpool-II service
-  systemd:
-    name: pgpool-II.service
-    enabled: yes
-
-- name:  Stop pgpool-II service
-  systemd:
-    name: pgpool-II.service
-    state: stopped
-
