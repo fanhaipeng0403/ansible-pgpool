@@ -49,7 +49,7 @@
     dest: "{{pgpool_postgresql_data_directory}}/users.sql"
 # execute the script
 - name: Execute sql script
-  command: "psql -p 5433 -f {{ pgpool_postgresql_data_directory }}/users.sql"
+  command: "psql -p 5432 -f {{ pgpool_postgresql_data_directory }}/users.sql"
   become_user: postgres
 # remove the script on remote
 - name: Delete sql script
