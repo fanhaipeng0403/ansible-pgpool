@@ -14,6 +14,5 @@ ansible-playbook -k generate-key-use-password.yml  -i inventory.ini
 
 
 ansible-playbook postgresql14_install.yml -i inventory.ini
-ansible-playbook verify.yml -i inventory.ini
 
 
