@@ -51,12 +51,3 @@
   tasks:
     - name: Reboot the remote system
       reboot:
-
-- name: Verify pgpool is running
-  hosts: masters
-  become: true
-  gather_facts: true
-  vars_files:
-    - "{{ playbook_dir }}/vars/variables.yaml"
-  roles:
-    - role: verify
