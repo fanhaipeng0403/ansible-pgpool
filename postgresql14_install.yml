@@ -10,7 +10,6 @@
     
     - role: set_hosts
 
-    - role: log_config
 
     - role: postgresql_install
 
@@ -18,6 +17,7 @@
 
     - role: postgresql_service
 
+    - role: log_config
 
     - role: pgpool-II_install
 
