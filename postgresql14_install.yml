@@ -12,12 +12,12 @@
 
     - role: postgresql_install
 
+    - role: postgresql_config
+      -
     - role: postgresql_service
 
     - role: pgpool-II_install
 
-#    - role: postgresql_data_volume
-    
     - role: pgpool-II_config
     
     - role: passwordless_ssh_config
@@ -26,14 +26,7 @@
 
     - role: pgpool_service
 
-- name: Run initdb_install on node1
-  hosts: postgres1.local
-  become: true
-  gather_facts: true
-  vars_files:
-    - "{{ playbook_dir }}/vars/variables.yaml"
-  roles:
-    - role: postgresql_config
+
 
 - name: Restart all remote Linux systems
   hosts: all
