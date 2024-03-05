@@ -1,3 +1,5 @@
+
+#  for root
 - name: Create ~/.ssh directory for root
   file:
     path: ~/.ssh
@@ -13,6 +15,7 @@
 - name: Generate SSH key without passphrase
   command: ssh-keygen -t rsa -b 4096 -f ~/.ssh/{{ ssh_key_name }} -N "" -q -C ""
 
+#  for postgres
 - name: Create ~/.ssh directory for postgres
   file:
     path: ~/.ssh
