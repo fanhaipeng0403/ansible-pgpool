@@ -1,6 +1,6 @@
 # network interface
 network_interface_name: enp0s8
-pgpool_delegate_ip: 192.168.56.40 #IP地址中以192开头的地址属于私有IP地址范围。私有IP地址是指在内部网络中使用，不会直接在互联网上路由。
+pgpool_delegate_ip: 192.168.56.40
 # pcp users
 pgpool_pcp_password: "pgpool"
 postgres_os_password_cleartext: system
