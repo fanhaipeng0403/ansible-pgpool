@@ -6,7 +6,6 @@
   become: true
   become_user: postgres
   command: /usr/pgsql-14/bin/initdb -D /postgresql/pg_data/
-  when: not pgdata_check.stat.exists
 
 
 - name: Replace content of /postgresql/pg_data/postgresql.conf
