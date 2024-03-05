@@ -31,7 +31,7 @@ NEW_PRIMARY_NODE_PORT="$9"
 NEW_PRIMARY_NODE_PGDATA="${10}"
 
 PGHOME=/usr/pgsql-14/
-ARCHIVEDIR=/postgresql/archive
+ARCHIVEDIR=/var/lib/pgsql/14/archive
 REPLUSER=repl
 PCP_USER=pgpool
 PGPOOL_PATH=/usr/bin

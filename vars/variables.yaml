@@ -69,8 +69,8 @@ pgpool_pgpass_entries:
 # pgpool conf
 pgpool_backend_clustering_mode: streaming_replication
 pgpool_user: pgpool
-pgpool_postgresql_home_directory: /postgresql
-pgpool_postgresql_data_directory: "{{ pgpool_postgresql_home_directory }}/pg_data"
+pgpool_postgresql_home_directory: /var/lib/pgsql/14/
+pgpool_postgresql_data_directory: "{{ pgpool_postgresql_home_directory }}/data"
 pgpool_if_cmd_path: 
 # pgpool Connection Settings
 pgpool_listen_addresses: '*'
