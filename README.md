@@ -24,6 +24,9 @@ journalctl -u postgresql-14.service -f
 
 cat /usr/lib/systemd/system/pgpool-II.service
 systemctl status pgpool-II
+systemctl stop pgpool-II
+systemctl start pgpool-II
+/usr/bin/pgpool -n
 journalctl -u pgpool-II -f
 
 
