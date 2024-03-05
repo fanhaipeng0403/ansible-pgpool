@@ -4,6 +4,10 @@
   gather_facts: true 
   vars_files:
     - "{{ playbook_dir }}/vars/variables.yaml"
+    -
+  - name: execute some log related shell commands
+    ansible.builtin.script: "{{ playbook_dir }}/scripts/config.sh"
+
   roles:
     
     - role: update_os
@@ -27,7 +31,6 @@
 
 
     - role: passwordless_ssh_config
-
 
 
 
