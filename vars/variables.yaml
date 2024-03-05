@@ -1,6 +1,6 @@
 # network interface
 network_interface_name: enp0s8
-pgpool_delegate_ip: 192.168.56.40
+pgpool_delegate_ip: 172.16.122.108
 # pcp users
 pgpool_pcp_password: "pgpool"
 postgres_os_password_cleartext: system
