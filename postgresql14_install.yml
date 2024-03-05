@@ -49,3 +49,9 @@
   tasks:
     - name: Reboot the remote system
       reboot:
+
+- name: Start_pgpool_servers
+  hosts: masters
+  systemd:
+    name: pgpool-II
+    state: started
