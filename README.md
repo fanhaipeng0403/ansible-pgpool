@@ -4,6 +4,7 @@ for pgpool version 4.3.x
 
 http://liuguangxuan.top/index.php/archives/40/
 
+git clone https://github.com/fanhaipeng0403/ansible-pgpool.git
 sudo yum install epel-release -y
 sudo yum install ansible -y
 sudo yum install git -y
