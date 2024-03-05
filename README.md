@@ -5,11 +5,10 @@ for pgpool version 4.3.x
 
 http://liuguangxuan.top/index.php/archives/40/
 
-scp -r /Users/fanhaipeng/ansible-pgpool/* root@47.96.95.84:/root/ansible-pgpool
+scp -r /Users/fanhaipeng/ansible-pgpool/* root@118.31.119.55:/root/ansible-pgpool
 
 sudo yum install epel-release -y
 sudo yum install ansible -y
-sudo yum install git -y
 ansible-galaxy collection install community.general
 export ANSIBLE_HOST_KEY_CHECKING=False
 ansible-playbook -k generate-key-use-password.yml  -i inventory.ini
@@ -31,7 +30,7 @@ journalctl -u pgpool-II -f
 
 
 
- ip addr show | grep -i "192.168.56.40"
+ ip addr show | grep -i "172.16.122.108'
 
  psql -h 127.0.0.1 -U postgres -p 5432
  psql -h 192.168.56.40 -p 5432 -U postgres
