@@ -60,6 +60,6 @@
 - name: Start_pgpool_servers
   hosts: masters
   tasks:
-    -systemd:
+   - systemd:
       name: pgpool-II
       state: started
