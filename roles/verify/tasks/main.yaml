@@ -37,3 +37,4 @@
   debug:
     msg:
       "watchdog_status": "{{ watchdog_status.stdout_lines }}"
+
