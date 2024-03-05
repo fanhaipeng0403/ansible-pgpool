@@ -7,7 +7,7 @@ After=network.target backups.mount
 User=postgres
 Group=postgres
 Type=notify
-Environment=PGDATA=/postgresql/pg_data
+Environment=PGDATA=/var/lib/pgsql/14/data
 # Disable OOM kill on the postmaster
 OOMScoreAdjust=-1000
 Environment=PG_OOM_ADJUST_FILE=/proc/self/oom_score_adj

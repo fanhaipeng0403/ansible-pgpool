@@ -32,14 +32,6 @@
     group: postgres
     mode: '0755'
 
-- name: Create pg data dir
-  file:
-    path: /postgresql/pg_data
-    state: directory
-    owner: postgres
-    group: postgres
-    mode: '0755'
-
 
 - name: Update postgres user password
   user:
