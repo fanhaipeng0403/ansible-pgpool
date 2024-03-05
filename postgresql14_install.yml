@@ -13,7 +13,7 @@
     - role: postgresql_install
 
     - role: postgresql_config
-      -
+
     - role: postgresql_service
 
     - role: pgpool-II_install
@@ -25,7 +25,6 @@
     - role: log_config
 
     - role: pgpool_service
-
 
 
 - name: Restart all remote Linux systems
