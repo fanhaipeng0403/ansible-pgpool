@@ -1,4 +1,5 @@
-g!/bin/bash
+#!/bin/bash
+
 # This script is run after failover_command to synchronize the Standby with the new Primary.
 # First try pg_rewind. If pg_rewind failed, use pg_basebackup.
 
@@ -31,7 +32,7 @@ NEW_PRIMARY_NODE_PORT="$9"
 NEW_PRIMARY_NODE_PGDATA="${10}"
 
 PGHOME=/usr/pgsql-14/
-ARCHIVEDIR=/var/lib/pgsql/14/archive
+ARCHIVEDIR=/postgresql/archive
 REPLUSER=repl
 PCP_USER=pgpool
 PGPOOL_PATH=/usr/bin

@@ -5,7 +5,7 @@
 - name: Initialize the Postgresql-14 database
   become: true
   become_user: postgres
-  command: /usr/pgsql-14/bin/initdb -D /var/lib/pgsql/14/data/
+  command: /usr/pgsql-14/bin/initdb -D /var/lib/pgsql/14/data/ -E utf8 --lc-collate='en_US.UTF-8' --lc-ctype='en_US.UTF-8'
 
 
 - name: Replace content of /var/lib/pgsql/14/data/postgresql.conf
