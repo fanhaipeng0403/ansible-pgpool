@@ -66,6 +66,7 @@
   become: true
   become_user: postgres
 
+
 - name: ssh default key passwordless with id_rsa_pgpool for user postgres
   command: sshpass -p {{ postgres_os_password_cleartext }} ssh-copy-id -i ~/.ssh/id_rsa_pgpool -o StrictHostKeyChecking=no postgres@{{ item }}
   with_items: "{{ groups['masters'] }}"

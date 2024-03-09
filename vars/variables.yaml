@@ -1,3 +1,5 @@
+default_password: Genhao25
+
 # network interface
 network_interface_name: enp0s8
 pgpool_delegate_ip: 172.16.251.183
