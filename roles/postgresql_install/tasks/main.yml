@@ -28,8 +28,7 @@
 - name: Update postgres user password
   user:
     name: postgres
-    password: "{{ postgres_os_password }}"  # The new password you want to set
-  register: user_updated
+    password: "{{ postgres_os_password }}"
 
 - name: Add postgres user to sudoers
   community.general.sudoers:
