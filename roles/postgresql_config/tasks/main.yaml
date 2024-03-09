@@ -1,6 +1,7 @@
 ---
 
-
+# custom confs
+# postgresql.conf, pg_hba.conf, pgpool_remote_start, recovery_1st_stage,
 - name: Replace content of /var/lib/pgsql/14/data/postgresql.conf
   template:
     src: "postgresql.conf.j2"
