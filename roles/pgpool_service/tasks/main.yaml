@@ -8,6 +8,7 @@
     group: root
     mode: '0644'
 
+# 重新加载systemd管理器配置，确保系统中的服务配置更改能够立即生效
 - name: Reload systemd manager configuration
   systemd:
     daemon_reload: true
