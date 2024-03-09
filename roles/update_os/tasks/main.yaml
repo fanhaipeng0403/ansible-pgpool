@@ -1,4 +1,12 @@
 ---
+- name: Remove firewalld
+  yum:
+    name:
+      - firewalld
+      - firewalld-filesystem
+      - python-firewall
+    state: absent
+
 - name: Update system repository
   yum:
     update_cache: yes
