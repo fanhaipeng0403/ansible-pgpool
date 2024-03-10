@@ -63,3 +63,6 @@ journalctl -u pgpool-II -f
 
  cat /var/lib/pgsql/14/data/pg_hba.conf
  cat /etc/pgpool-II/pgpool.conf
+
+
+cd /var/lib/pgsql/14/data
