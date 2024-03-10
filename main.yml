@@ -24,8 +24,8 @@
 
     - role: pgpool_service
 
-- name: Run initdb_install on node1
-  hosts: postgres1.local
+- name: Run initdb_install on node2
+  hosts: postgres2.local
   become: true
   gather_facts: true
   vars_files:
@@ -34,8 +34,8 @@
     - role: postgresql_config
 
 
-- name: Run initdb_install on node2
-  hosts: postgres2.local
+- name: Run initdb_install on node3
+  hosts: postgres3.local
   become: true
   gather_facts: true
   vars_files:
