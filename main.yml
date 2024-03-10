@@ -1,5 +1,5 @@
 - name: Install and configure Cluster Postgresql14 on nodes
-  hosts: standby
+  hosts: master,standby
   become: true
   gather_facts: true
   vars_files:
@@ -45,21 +45,22 @@
 
 
 - name: Restart all remote Linux systems
-  hosts: all
+  hosts: standby
   tasks:
     - name: Reboot the remote system
       reboot:
+
+
+- name: Start_pgpool_servers
+  hosts: standby, master
+  tasks:
+    - systemd:
+        name: pgpool-II
+        state: started
 
 - name: Start_postgresql-14.service
   hosts: standby
   tasks:
    - systemd:
       name: postgresql-14.service
-      state: started
-
-- name: Start_pgpool_servers
-  hosts: standby
-  tasks:
-   - systemd:
-      name: pgpool-II
       state: started
