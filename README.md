@@ -71,8 +71,7 @@ journalctl -u pgpool-II -f
 cd /var/lib/pgsql/14/data
 
 
-#
- 功能验证用到的命令
+# 功能验证用到的命令
 pcp_recovery_node -h 172.16.212.100 -p 9898 -U pgpool -n 1
 pcp_watchdog_info -h 172.16.212.100 -p 9898 -U pgpool
 psql -h 172.16.212.100 -p 9999 -U pgpool postgres -c "show pool_nodes"
