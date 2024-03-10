@@ -63,6 +63,14 @@ journalctl -u pgpool-II -f
  );
 
 
+INSERT INTO game_room (id, room_id, sb, bb, min_buy_in, max_buy_in, timeout, max, level, room_type, sng_detail,
+                              tournament_buy_in, is_available)
+VALUES (1, 1, 1000, 2000, 50000, 300000, 10, 6, 1, 1, null, null, true);
+
+
+SELECT * FROM game_room;
+
+
 
  cat /var/lib/pgsql/14/data/pg_hba.conf
  cat /etc/pgpool-II/pgpool.conf
@@ -72,7 +80,11 @@ cd /var/lib/pgsql/14/data
 
 
 # 功能验证用到的命令
- psql -h 127.0.0.1 -p 9999 -U postgres
+ psql -h  172.16.3.100 -p 9999 -U pgpool
+
+
+ psql -h  127.0.0.1 -p 9999 -U pgpool
+ select pg_is_in_recovery();
  show pool_nodes;
 
 pcp_recovery_node -h 172.16.212.100 -p 9898 -U pgpool -n 1
