@@ -94,5 +94,3 @@ pg_ctl -D /var/lib/pgsql/11/data -m immediate stop
 psql -h slave -p 5432 -U pgpool postgres -c "select pg_is_in_recovery()"
 
 
-
-数据可同步。看虚拟ip
