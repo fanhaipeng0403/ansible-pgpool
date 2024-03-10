@@ -33,15 +33,15 @@
   roles:
     - role: postgresql_config
 
-
-- name: Run initdb_install on node2
-  hosts: postgres2.local
-  become: true
-  gather_facts: true
-  vars_files:
-    - "{{ playbook_dir }}/vars/variables.yaml"
-  roles:
-    - role: postgresql_config
+#
+#- name: Run initdb_install on node2
+#  hosts: postgres2.local
+#  become: true
+#  gather_facts: true
+#  vars_files:
+#    - "{{ playbook_dir }}/vars/variables.yaml"
+#  roles:
+#    - role: postgresql_config
 
 
 - name: Restart all remote Linux systems
