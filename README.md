@@ -1,3 +1,4 @@
+https://blog.csdn.net/qq_35550345/article/details/114073813
 https://www.cnblogs.com/xianghuaqiang/p/13887482.html
 https://github.com/davidepolli/ansible-pgpool
 # ansible playbook for installing postgres-pgool
@@ -34,7 +35,9 @@ journalctl -u pgpool-II -f
 
  psql -h 127.0.0.1 -U postgres -p 5432
  psql -h 192.168.56.40 -p 5432 -U postgres
- psql -h 192.168.56.40 -p 9999 -U postgres
+ psql -h 127.0.0.1 -p 9999 -U postgres
+
+ show pool_nodes;
 
 
  create table game_room
