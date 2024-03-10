@@ -6,7 +6,7 @@ for pgpool version 4.3.x
 
 http://liuguangxuan.top/index.php/archives/40/
 
-scp -r /Users/fanhaipeng/ansible-pgpool/* root@47.97.74.180:/root/ansible-pgpool
+scp -r /Users/fanhaipeng/ansible-pgpool/* root@120.26.223.225:/root/ansible-pgpool
 
 sudo yum install epel-release -y
 sudo yum install ansible -y
