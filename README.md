@@ -13,7 +13,7 @@ ansible-galaxy collection install community.general
 export ANSIBLE_HOST_KEY_CHECKING=False
 ansible-playbook generate-key-use-password.yml  -i inventory.ini
 
-ansible-playbook postgresql14_install.yml -i inventory.ini
+ansible-playbook main.yml -i inventory.ini
 
 
 cat /usr/lib/systemd/system/postgresql-14.service
