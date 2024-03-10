@@ -2,6 +2,12 @@
 
 # custom confs
 # postgresql.conf, pg_hba.conf, pgpool_remote_start, recovery_1st_stage,
+
+- name: Initialize the Postgresql-14 database
+  become: true
+  become_user: postgres
+  command: /usr/pgsql-14/bin/initdb -D /var/lib/pgsql/14/data/ -E utf8 --lc-collate='en_US.UTF-8' --lc-ctype='en_US.UTF-8'
+
 - name: Replace content of /var/lib/pgsql/14/data/postgresql.conf
   template:
     src: "postgresql.conf.j2"
@@ -30,11 +36,6 @@
     owner: postgres
     group: postgres
     mode: '0744'
-
-- name: Initialize the Postgresql-14 database
-  become: true
-  become_user: postgres
-  command: /usr/pgsql-14/bin/initdb -D /var/lib/pgsql/14/data/ -E utf8 --lc-collate='en_US.UTF-8' --lc-ctype='en_US.UTF-8'
 
 - name: Start postgresql-14 service
   systemd:
