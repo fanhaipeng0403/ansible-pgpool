@@ -5,6 +5,7 @@ Wants=postgresql-14.service
 
 [Service]
 User=postgres
+ExecStartPre=/bin/sleep 5
 ExecStart=/usr/bin/pgpool -n
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
