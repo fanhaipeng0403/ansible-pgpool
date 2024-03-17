@@ -38,6 +38,7 @@ journalctl -u pgpool-II -f
 
 # 功能验证用到的命令
 psql -h 127.0.0.1  -p 9999 -U postgres
+psql -h 127.0.0.1  -p 5432 -U postgres
 show pool_nodes;
 
 
