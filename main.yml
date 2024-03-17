@@ -27,9 +27,10 @@
 
 - name: disable postgresql-14 service on node 1
   hosts: postgres1.local
-  systemd:
-    name: postgresql-14.service
-    enabled: false
+  tasks:
+    - systemd:
+       name: postgresql-14.service
+       enabled: false
 
 
 - name: Run initdb_install on node2
