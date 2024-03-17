@@ -38,6 +38,7 @@ journalctl -u pgpool-II -f
 
 # 功能验证用到的命令
 psql -h 127.0.0.1  -p 9999 -U postgres
+show pool_nodes;
 
 
  create table game_room
@@ -73,7 +74,6 @@ select * from game_room;
 
 
  select pg_is_in_recovery();
- show pool_nodes;
 
 pcp_recovery_node -h 172.16.212.100 -p 9898 -U pgpool -n 1
 pcp_watchdog_info -h 172.16.212.100 -p 9898 -U pgpool
