@@ -58,17 +58,17 @@
 # used by the failover.sh, follow_master.sh, recovery_1st_stage and pgpool_remote_start scripts
 - name: ssh passwordless with id_rsa_pgpool
   command: sshpass -p {{ postgres_os_password_cleartext }} ssh-copy-id -i ~/.ssh/{{ ssh_key_name }} -o StrictHostKeyChecking=no postgres@{{ item }}
-  with_items: "{{ groups['standby'] }}"
+  with_items: "{{ groups['all'] }}"
 
 - name: ssh passwordless with id_rsa_pgpool for user postgres
   command: sshpass -p {{ postgres_os_password_cleartext }} ssh-copy-id -i ~/.ssh/{{ ssh_key_name }} -o StrictHostKeyChecking=no postgres@{{ item }}
-  with_items: "{{ groups['standby'] }}"
+  with_items: "{{ groups['all'] }}"
   become: true
   become_user: postgres
 
 
 - name: ssh default key passwordless with id_rsa_pgpool for user postgres
   command: sshpass -p {{ postgres_os_password_cleartext }} ssh-copy-id -i ~/.ssh/id_rsa_pgpool -o StrictHostKeyChecking=no postgres@{{ item }}
-  with_items: "{{ groups['standby'] }}"
+  with_items: "{{ groups['all'] }}"
   become: true
   become_user: postgres
