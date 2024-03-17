@@ -21,6 +21,12 @@ systemctl status postgresql-14.service
 
 systemctl stop postgresql-14.service
 systemctl stop pgpool-II
+systemctl disable  postgresql-14.service
+systemctl disable  pgpool-II
+rm -rf "/var/lib/pgsql/14/data/"
+
+
+
 
 
 
