@@ -75,6 +75,7 @@ VALUES (1, 1, 1000, 2000, 50000, 300000, 10, 6, 1, 1, null, null, true);
 select * from game_room;
 
 
+show pool_nodes;
 
  select pg_is_in_recovery();
 
