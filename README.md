@@ -80,10 +80,30 @@ cd /var/lib/pgsql/14/data
 
 
 # 功能验证用到的命令
- psql -h  172.16.3.100 -p 9999 -U pgpool
-
-
  psql -h  127.0.0.1 -p 9999 -U pgpool
+ create table game_room
+  (
+      id                bigserial
+          primary key,
+      room_id           integer
+          unique,
+      sb                bigint,
+      bb                bigint,
+      min_buy_in        bigint,
+      max_buy_in        bigint,
+      timeout           integer,
+      max               integer,
+      level             smallint,
+      room_type         smallint,
+      sng_detail        json,
+      tournament_buy_in json,
+      keep_table_count  bigint,
+      room_bg           text,
+      table_bg          text,
+      is_available      boolean
+  );
+
+
  select pg_is_in_recovery();
  show pool_nodes;
 
