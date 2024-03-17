@@ -30,57 +30,10 @@ systemctl start pgpool-II
 journalctl -u pgpool-II -f
 
 
-
- ip addr show | grep -i "172.16.122.108'
-
- psql -h 127.0.0.1 -U postgres -p 5432
- psql -h 192.168.56.40 -p 5432 -U postgres
- psql -h 127.0.0.1 -p 9999 -U postgres
-
- show pool_nodes;
-
-
- create table game_room
- (
-     id                bigserial
-         primary key,
-     room_id           integer
-         unique,
-     sb                bigint,
-     bb                bigint,
-     min_buy_in        bigint,
-     max_buy_in        bigint,
-     timeout           integer,
-     max               integer,
-     level             smallint,
-     room_type         smallint,
-     sng_detail        json,
-     tournament_buy_in json,
-     keep_table_count  bigint,
-     room_bg           text,
-     table_bg          text,
-     is_available      boolean
- );
-
-
-INSERT INTO game_room (id, room_id, sb, bb, min_buy_in, max_buy_in, timeout, max, level, room_type, sng_detail,
-                              tournament_buy_in, is_available)
-VALUES (1, 1, 1000, 2000, 50000, 300000, 10, 6, 1, 1, null, null, true);
-
-
-SELECT * FROM game_room;
-
-
-
- cat /var/lib/pgsql/14/data/pg_hba.conf
- cat /etc/pgpool-II/pgpool.conf
-
-
-cd /var/lib/pgsql/14/data
-
-
 # 功能验证用到的命令
- psql -h  127.0.0.1 -p 9999 -U pgpool
+psql -h 127.0.0.1  -p 9999 -U postgres
+
+
  create table game_room
   (
       id                bigserial
@@ -102,6 +55,15 @@ cd /var/lib/pgsql/14/data
       table_bg          text,
       is_available      boolean
   );
+
+
+INSERT INTO game_room (id, room_id, sb, bb, min_buy_in, max_buy_in, timeout, max, level, room_type, sng_detail,
+
+                              tournament_buy_in, is_available)
+VALUES (1, 1, 1000, 2000, 50000, 300000, 10, 6, 1, 1, null, null, true);
+
+select * from game_room;
+
 
 
  select pg_is_in_recovery();
