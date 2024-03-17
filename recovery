@@ -2,6 +2,7 @@ https://blog.csdn.net/zhaizhai6_6/article/details/106765701
 https://blog.csdn.net/Kangyucheng/article/details/108676026
 
 
+有主节点和从节点，从节点坏了，不影响，恢复时候自动同步。主节点挂了，服务影响几秒，从节点升为主节点，主节点变为从节点，会被剔除集群，需要手动恢复，恢复数据，加入集群
 
 !!!!!!!!!
 pcp_attach_node -h 127.0.0.1 -p 9898 -U pgpool -n 1
