@@ -21,6 +21,8 @@ ansible-playbook main.yml -i inventory.ini
 systemctl restart pgpool-II
 systemctl restart postgresql-14.service
 
+journalctl -u pgpool-II --no-pager | tail -n 1000
+
 
 
 cat /usr/lib/systemd/system/postgresql-14.service
