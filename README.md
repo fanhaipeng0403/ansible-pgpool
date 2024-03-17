@@ -17,6 +17,12 @@ ansible-playbook generate-key-use-password.yml  -i inventory.ini
 ansible-playbook main.yml -i inventory.ini
 
 
+
+systemctl restart pgpool-II
+systemctl restart postgresql-14.service
+
+
+
 cat /usr/lib/systemd/system/postgresql-14.service
 systemctl status postgresql-14.service
 systemctl restart postgresql-14.service

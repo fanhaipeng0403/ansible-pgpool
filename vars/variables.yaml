@@ -105,7 +105,7 @@ pgpool_backend_servers:
     application_name: postgres2.local
 
   - hostname: postgres3.local
-    port: 5433
+    port: 5432
     weight: 1
     data_directory: "{{ pgpool_postgresql_data_directory }}"
     flag: ALLOW_TO_FAILOVER
