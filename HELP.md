@@ -8,6 +8,8 @@ cat /var/log/pgpool/pgpool_status
 
 cd /var/log/pgpool
 
+
+systemctl stop postgresql-14.service
 systemctl restart postgresql-14.service
 systemctl restart pgpool-II
 
