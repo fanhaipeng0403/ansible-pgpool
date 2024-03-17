@@ -12,6 +12,12 @@ cd /var/log/pgpool
 systemctl stop postgresql-14.service
 systemctl restart postgresql-14.service
 systemctl restart pgpool-II
+journalctl -u pgpool-II --no-pager | tail -n 1000
+
+
+
+systemctl status pgpool-II
+systemctl status postgresql-14.service
 
 systemctl stop postgresql-14.service
 systemctl stop pgpool-II
