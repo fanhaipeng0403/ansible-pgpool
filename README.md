@@ -75,11 +75,19 @@ VALUES (1, 1, 1000, 2000, 50000, 300000, 10, 6, 1, 1, null, null, true);
 select * from game_room;
 
 
+pgpool故障转移时将节点从集群中剔除，是不会自动恢复的，需要手动恢复。
+http://www.wulitutu.com/article/20231107190848058.html
+
+
+
+
+
 show pool_nodes;
 
  select pg_is_in_recovery();
 
-pcp_recovery_node -h 172.16.212.100 -p 9898 -U pgpool -n 1
+pcp_recovery_node -h 127.0.0.1 -p 9898 -U pgpool -n 1
+
 pcp_watchdog_info -h 172.16.212.100 -p 9898 -U pgpool
 psql -h 172.16.212.100 -p 9999 -U pgpool postgres -c "show pool_nodes"
 pg_ctl -D /var/lib/pgsql/11/data -m immediate stop
