@@ -24,6 +24,14 @@
 
     - role: pgpool_service
 
+
+- name: disable postgresql-14 service on node 1
+  hosts: postgres1.local
+  systemd:
+    name: postgresql-14.service
+    enabled: false
+
+
 - name: Run initdb_install on node2
   hosts: postgres2.local
   become: true
