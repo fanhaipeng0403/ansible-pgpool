@@ -25,7 +25,7 @@
     - role: pgpool_service
 
 
-- name: disable postgresql-14 service on node 1
+- name: disable postgresql-14 service on  postgres1.local
   hosts: postgres1.local
   tasks:
     - systemd:
@@ -33,7 +33,7 @@
        enabled: false
 
 
-- name: Run initdb_install on node2
+- name: Run initdb_install on  postgres2.local
   hosts: postgres2.local
   become: true
   gather_facts: true
@@ -43,7 +43,7 @@
     - role: postgresql_config
 
 
-- name: Run initdb_install on node3
+- name: Run initdb_install on postgres3.local
   hosts: postgres3.local
   become: true
   gather_facts: true
@@ -60,16 +60,16 @@
       reboot:
 
 
-- name: Start_pgpool_servers
-  hosts: standby, master
-  tasks:
-    - systemd:
-        name: pgpool-II
-        state: started
-
 - name: Start_postgresql-14.service
   hosts: standby
   tasks:
    - systemd:
       name: postgresql-14.service
       state: started
+
+- name: Start_pgpool_servers
+  hosts: standby, master
+  tasks:
+    - systemd:
+        name: pgpool-II
+        state: started
