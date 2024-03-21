@@ -30,3 +30,5 @@ rm -rf "/var/lib/pgsql/14/data/"
 
 
 
+
+

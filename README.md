@@ -66,6 +66,9 @@ show pool_nodes;
       is_available      boolean
   );
 
+delete from game_room;
+
+\dt;
 
 INSERT INTO game_room (id, room_id, sb, bb, min_buy_in, max_buy_in, timeout, max, level, room_type, sng_detail,
 
@@ -74,6 +77,7 @@ VALUES (1, 1, 1000, 2000, 50000, 300000, 10, 6, 1, 1, null, null, true);
 
 select * from game_room;
 
+show pool_nodes;
 
 pgpool故障转移时将节点从集群中剔除，是不会自动恢复的，需要手动恢复。
 http://www.wulitutu.com/article/20231107190848058.html
