@@ -109,3 +109,8 @@ pg_ctl -D /var/lib/pgsql/11/data -m immediate stop
 psql -h slave -p 5432 -U pgpool postgres -c "select pg_is_in_recovery()"
 
 
+
+
+pcp_recovery_node -h 127.0.0.1 -p 9898 -U pgpool -n 1
+
+不要用attach

@@ -8,12 +8,6 @@ https://blog.csdn.net/Kangyucheng/article/details/108676026
 
 主节点挂了，服务影响几秒，从节点升为主节点，主节点变为从节点，会被剔除集群，需要手动恢复，恢复数据，加入集群
 
-!!!!!!!!!
-pcp_attach_node -h 127.0.0.1 -p 9898 -U pgpool -n 1
-pgpool
-
-pcp_attach_node -h 127.0.0.1 -p 9898 -U pgpool -n 2
-pgpool
 
 
 psql -h 127.0.0.1  -p 9999 -U postgres
