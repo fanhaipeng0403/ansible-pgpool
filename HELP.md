@@ -26,6 +26,13 @@ systemctl disable  pgpool-II
 rm -rf "/var/lib/pgsql/14/data/"
 
 
+如果postgres2，node_id 1为down, 那么在postgres2机器上执行
+postgres2.local
+pcp_attach_node -h 127.0.0.1 -p 9898 -U pgpool -n 1
+
+
+psql -h 127.0.0.1 -p 9999 -U pgpool postgres -c "show pool_nodes"
+
 
 
 

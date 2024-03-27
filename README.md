@@ -75,6 +75,13 @@ INSERT INTO game_room (id, room_id, sb, bb, min_buy_in, max_buy_in, timeout, max
                               tournament_buy_in, is_available)
 VALUES (1, 1, 1000, 2000, 50000, 300000, 10, 6, 1, 1, null, null, true);
 
+
+                              tournament_buy_in, is_available)
+VALUES (2, 1, 1000, 2000, 50000, 300000, 10, 6, 1, 1, null, null, true);
+
+
+
+
 select * from game_room;
 
 show pool_nodes;
