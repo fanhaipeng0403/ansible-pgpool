@@ -16,6 +16,8 @@ systemctl restart postgresql-14.service
 systemctl restart pgpool-II
 journalctl -u pgpool-II --no-pager | tail -n 1000
 
+journalctl -u postgresql-14.service --no-pager | tail -n 1000
+
 
 
 systemctl status pgpool-II

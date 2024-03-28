@@ -569,7 +569,7 @@
                                    #   %S = old primary node port number
                                    #   %% = '%' character
 
-#failover_on_backend_error = on
+failover_on_backend_error = on
                                    # Initiates failover when reading/writing to the
                                    # backend communication socket fails
                                    # If set to off, pgpool will report an
@@ -966,6 +966,9 @@ backend_flag{{ loop.index0 }} = '{{ server.flag }}'
 backend_application_name{{ loop.index0 }} = '{{ server.application_name }}'
 {% endfor %}
 
+replication_mode = off
+master_slave_mode = on
+master_slave_sub_mode = 'stream'
 enable_pool_hba = {{ pgpool_enable_pool_hba }}
 pool_passwd = '{{ pgpool_pool_passwd }}' 
 pid_file_name = '{{ pgpool_pid_file_name }}'

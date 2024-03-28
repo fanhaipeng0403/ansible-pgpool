@@ -19,10 +19,9 @@ END $$;
 
 select count(*) from test_table;
 
+psql -h  127.0.0.1 -p 5432 -U postgres
 psql -h  127.0.0.1 -p 9999 -U postgres
 psql -h  127.0.0.1 -p 9999 -U postgres -c "show pool_nodes"
-
- pcp_attach_node -h 127.0.0.1 -p 9898 -U pgpool -n 1
 
 
 # systemctl stop pgpool-II
