@@ -105,7 +105,7 @@ show pool_nodes;
 pcp_recovery_node -h 127.0.0.1 -p 9898 -U pgpool -n 1
 
 pcp_watchdog_info -h 172.16.212.100 -p 9898 -U pgpool
-psql -h 172.16.212.100 -p 9999 -U pgpool postgres -c "show pool_nodes"
+psql -h  127.0.0.1 -p 9999 -U pgpool postgres -c "show pool_nodes"
 pg_ctl -D /var/lib/pgsql/11/data -m immediate stop
 psql -h slave -p 5432 -U pgpool postgres -c "select pg_is_in_recovery()"
 

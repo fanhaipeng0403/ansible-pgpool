@@ -19,3 +19,8 @@
   yum:
     name: sshpass
     state: present
+
+- name: Install expect
+  yum:
+    name: expect
+    state: present

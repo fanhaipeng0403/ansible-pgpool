@@ -1,0 +1,10 @@
+
+sudo yum install expect   # CentOS/RHEL
+
+
+psql -h  127.0.0.1 -p 9999 -U pgpool postgres -c "show pool_nodes"
+
+# systemctl stop pgpool-II
+# systemctl stop postgresql-14
+
+
