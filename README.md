@@ -128,8 +128,8 @@ pcp_recovery_node -h 127.0.0.1 -p 9898 -U pgpool -n 1
 卸载
 
 
-systemctl stop pgpool-II  -y
-systemctl stop postgresql-14.service -y
+systemctl stop pgpool-II
+systemctl stop postgresql-14.service
 yum remove postgres* -y
 yum remove pgpool* -y
 yum autoremove -y
