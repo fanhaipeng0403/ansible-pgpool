@@ -1,3 +1,5 @@
+https://stackoverflow.com/questions/39375613/automatic-recovery-of-the-failed-postgresql-master-node-is-not-working-with-pgpo
+
 在每个节点依次执行
 
 
@@ -56,6 +58,12 @@ pcp_recovery_node用于恢复故障节点。
 
 ？？？？？ 2节点一直down, 无法pcp recovery ，发现是postgres启动不起来，
 发现是postgres /var/lib/pgsql/14/data 不见了？？？
+
+su - postgres
+mkdir /var/lib/pgsql/14/data
+/usr/pgsql-14/bin/initdb -D /var/lib/pgsql/14/data/ -E utf8 --lc-collate='en_US.UTF-8' --lc-ctype='en_US.UTF-8'
+pcp_recovery_node -h 127.0.0.1 -p 9898 -U pgpool -n 2
+
 
 
 https://blog.csdn.net/Darren_tan/article/details/104530338
