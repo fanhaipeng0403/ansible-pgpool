@@ -1,3 +1,4 @@
+https://developer.aliyun.com/article/1361261?spm=5176.26934562.main.2.694c36cebvFPdo
 https://www.modb.pro/db/176886
 
 
@@ -126,7 +127,7 @@ systemctl stop pgpool-II  -y
 systemctl stop postgresql-14.service -y
 yum remove postgres* -y
 yum remove pgpool* -y
-yum autoremove
+yum autoremove -y
 rm -rf "/var/lib/pgsql/14/data/"
 
 是恢复脚本删的
