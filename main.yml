@@ -93,17 +93,6 @@
 
 
 
-
-- name: Run initdb_install on  postgres3.local
-  hosts: postgres3.local
-  become: true
-  gather_facts: true
-  vars_files:
-    - "{{ playbook_dir }}/vars/variables.yaml"
-  roles:
-    - role: postgresql_config
-
-
 - name: Copy .pgpass and .pcppass files to home directory
   hosts: standby
   tasks:
@@ -124,28 +113,28 @@
       reboot:
 
 
-#
-#- name: Start_postgresql-14.service on postgres2.local
-#  hosts: postgres2.local
-#  tasks:
-#   - systemd:
-#      name: postgresql-14.service
-#      state: started
 
-#
-#- name: pg backup on postgres3.local
-#  hosts: postgres3.local
-#  become: true
-#  gather_facts: true
-#  vars_files:
-#    - "{{ playbook_dir }}/vars/variables.yaml"
-#  roles:
-#    - role: pg_basebackup_config
-#
-#
+- name: Start_postgresql-14.service on postgres2.local
+  hosts: postgres2.local
+  tasks:
+   - systemd:
+      name: postgresql-14.service
+      state: started
+
+
+- name: pg backup on postgres3.local
+  hosts: postgres3.local
+  become: true
+  gather_facts: true
+  vars_files:
+    - "{{ playbook_dir }}/vars/variables.yaml"
+  roles:
+    - role: pg_basebackup_config
+
+
 
 - name: Start_postgresql-14.service on postgres3.local
-  hosts: standby
+  hosts: postgres3.local
   tasks:
     - systemd:
         name: postgresql-14.service

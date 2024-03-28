@@ -31,12 +31,12 @@
     path: /var/lib/pgsql/14/data/postgresql.conf
     regexp: '^max_wal_senders = '
     line: 'max_wal_senders = 100'
-#
-#- name: Add recovery.config
-#  template:
-#    src: "myrecovery.conf.3.j2"
-#    dest: "/var/lib/pgsql/14/data/myrecovery.conf"
-#    owner: postgres
-#    group: postgres
-#    mode: '0744'
-#
+
+- name: Add recovery.config
+  template:
+    src: "myrecovery.conf.3.j2"
+    dest: "/var/lib/pgsql/14/data/myrecovery.conf"
+    owner: postgres
+    group: postgres
+    mode: '0744'
+
