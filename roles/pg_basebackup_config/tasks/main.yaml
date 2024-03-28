@@ -25,9 +25,3 @@
     dest: "/var/lib/pgsql/14/data/myrecovery.conf"
     backup: true
 
-
-- name: Start postgresql-14 service
-  systemd:
-    name: postgresql-14.service
-    state: started
-
