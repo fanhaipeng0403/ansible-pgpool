@@ -1,3 +1,34 @@
+- name: Stop Pgpool-II and PostgreSQL services, uninstall packages and clean up directory
+  hosts: master,standby
+  tasks:
+    - name: Stop Pgpool-II service
+      systemd:
+        name: pgpool-II
+        state: stopped
+
+    - name: Stop PostgreSQL-14 service
+      systemd:
+        name: postgresql-14
+        state: stopped
+
+    - name: Uninstall PostgreSQL packages
+      yum:
+        name: 'postgresql*'
+        state: absent
+
+    - name: Uninstall Pgpool packages
+      yum:
+        name: 'pgpool*'
+        state: absent
+
+    - name: Autoremove unused packages
+      yum:
+        name: ''
+        state: autoremove
+
+    - name: Remove PostgreSQL data directory
+      shell: rm -rf /var/lib/pgsql/14/data/
+
 - name: Install and configure Cluster Postgresql14 on nodes
   hosts: master,standby
   become: true

@@ -7,13 +7,13 @@
 
 - name: Modify max_connections parameter
   lineinfile:
-    path: /path/to/postgresql.conf
+    path: /var/lib/pgsql/14/data/postgresql.conf
     regexp: '^max_connections = '
     line: 'max_connections = 200'
 
 - name: Modify max_wal_senders parameter
   lineinfile:
-    path: /path/to/postgresql.conf
+    path: /var/lib/pgsql/14/data/postgresql.conf
     regexp: '^max_wal_senders = '
     line: 'max_wal_senders = 100'
 
