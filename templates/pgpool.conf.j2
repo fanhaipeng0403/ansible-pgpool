@@ -966,7 +966,7 @@ backend_flag{{ loop.index0 }} = '{{ server.flag }}'
 backend_application_name{{ loop.index0 }} = '{{ server.application_name }}'
 {% endfor %}
 
-replication_mode = off
+replication_mode =on
 master_slave_mode = on
 master_slave_sub_mode = 'stream'
 enable_pool_hba = {{ pgpool_enable_pool_hba }}
