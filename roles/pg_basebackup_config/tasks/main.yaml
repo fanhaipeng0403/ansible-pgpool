@@ -5,6 +5,14 @@
   command: pg_basebackup -h postgres2.local -p 5432 -U repl -w -Fp -Xs -Pv -R  -D /var/lib/pgsql/14/data/
 
 
+- name: change owner
+  file:
+    path: /var/lib/pgsql/14/data/
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: "0744"
+
 - name: Replace content of /usr/lib/tmpfiles.d/postgresql.conf
   copy:
     dest: "/usr/lib/tmpfiles.d/postgresql.conf"
@@ -24,10 +32,12 @@
     path: /var/lib/pgsql/14/data/postgresql.conf
     regexp: '^max_wal_senders = '
     line: 'max_wal_senders = 100'
-
-- name: Add recovery.config
-  template:
-    src: "myrecovery.conf.3.j2"
-    dest: "/var/lib/pgsql/14/data/myrecovery.conf"
-    backup: true
-
+#
+#- name: Add recovery.config
+#  template:
+#    src: "myrecovery.conf.3.j2"
+#    dest: "/var/lib/pgsql/14/data/myrecovery.conf"
+#    owner: postgres
+#    group: postgres
+#    mode: '0744'
+#
