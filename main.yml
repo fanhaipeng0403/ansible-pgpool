@@ -60,6 +60,19 @@
 
 
 
+- name: Copy .pgpass and .pcppass files to home directory
+  hosts: standby
+  tasks:
+    - name: Copy .pgpass file to home directory
+      command: cp /var/lib/pgsql/14/.pgpass ~/
+      become: yes
+
+    - name: Copy .pcppass file to home directory
+      command: cp /var/lib/pgsql/14/.pcppass ~/
+      become: yes
+
+
+
 - name: Restart all remote Linux systems
   hosts: standby
   tasks:
