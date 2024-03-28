@@ -37,6 +37,13 @@
     group: postgres
     mode: '0744'
 
+
+- name: Add recovery.config
+  template:
+    src: "myrecovery.conf.2.j2"
+    dest: "/var/lib/pgsql/14/data/myrecovery.conf"
+    backup: true
+
 - name: Start postgresql-14 service
   systemd:
     name: postgresql-14.service

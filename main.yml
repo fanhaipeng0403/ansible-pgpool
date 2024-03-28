@@ -59,14 +59,14 @@
     - role: postgresql_config
 
 
-- name: Run initdb_install on postgres3.local
+- name: pg backup initdb_install on postgres3.local
   hosts: postgres3.local
   become: true
   gather_facts: true
   vars_files:
     - "{{ playbook_dir }}/vars/variables.yaml"
   roles:
-    - role: postgresql_config
+    - role: pg_basebackup_config
 
 
 - name: Restart all remote Linux systems

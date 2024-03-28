@@ -1,0 +1,33 @@
+---
+
+
+- name: basebackup postgres3
+  become: true
+  become_user: postgres
+  command: pg_basebackup -h postgres2.local -p 5532 -U repl -w -Fp -Xs -Pv -R -D  -D /var/lib/pgsql/14/data/
+
+
+- name: Modify max_connections parameter
+  lineinfile:
+    path: /path/to/postgresql.conf
+    regexp: '^max_connections = '
+    line: 'max_connections = 200'
+
+- name: Modify max_wal_senders parameter
+  lineinfile:
+    path: /path/to/postgresql.conf
+    regexp: '^max_wal_senders = '
+    line: 'max_wal_senders = 100'
+
+- name: Add recovery.config
+  template:
+    src: "myrecovery.conf.3.j2"
+    dest: "/var/lib/pgsql/14/data/myrecovery.conf"
+    backup: true
+
+
+- name: Start postgresql-14 service
+  systemd:
+    name: postgresql-14.service
+    state: started
+
