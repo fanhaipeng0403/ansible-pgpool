@@ -59,7 +59,24 @@
     - role: postgresql_config
 
 
-- name: pg backup initdb_install on postgres3.local
+
+- name: Restart all remote Linux systems
+  hosts: standby
+  tasks:
+    - name: Reboot the remote system
+      reboot:
+
+
+
+- name: Start_postgresql-14.service on postgres2.local
+  hosts: postgres2.local
+  tasks:
+   - systemd:
+      name: postgresql-14.service
+      state: started
+
+
+- name: pg backup on postgres3.local
   hosts: postgres3.local
   become: true
   gather_facts: true
@@ -69,19 +86,14 @@
     - role: pg_basebackup_config
 
 
-- name: Restart all remote Linux systems
-  hosts: standby
-  tasks:
-    - name: Reboot the remote system
-      reboot:
 
-
-- name: Start_postgresql-14.service
-  hosts: standby
+- name: Start_postgresql-14.service on postgres3.local
+  hosts: postgres3.local
   tasks:
-   - systemd:
-      name: postgresql-14.service
-      state: started
+    - systemd:
+        name: postgresql-14.service
+        state: started
+
 
 - name: Start_pgpool_servers
   hosts: master
