@@ -2,8 +2,6 @@
 
 
 - name: basebackup postgres3
-  become: true
-  become_user: postgres
   command: pg_basebackup -h postgres2.local -p 5432 -U repl -w -Fp -Xs -Pv -R  -D /var/lib/pgsql/14/data/
 
 
