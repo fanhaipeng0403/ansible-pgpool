@@ -33,6 +33,22 @@
        enabled: false
 
 
+
+- name: disable pgpool-II -2
+  hosts: postgres2.local
+  tasks:
+    - systemd:
+        name: pgpool-II
+        enabled: false
+
+- name: disable pgpool-II -3
+  hosts: postgres3.local
+  tasks:
+    - systemd:
+        name: pgpool-II
+        enabled: false
+
+
 - name: Run initdb_install on  postgres2.local
   hosts: postgres2.local
   become: true
@@ -68,7 +84,7 @@
       state: started
 
 - name: Start_pgpool_servers
-  hosts: standby, master
+  hosts: master
   tasks:
     - systemd:
         name: pgpool-II

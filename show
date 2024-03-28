@@ -1,8 +1,29 @@
 
-sudo yum install expect   # CentOS/RHEL
+看pgpool-role status 即可
+
+-- 创建表
+CREATE TABLE test_table (
+    id serial PRIMARY KEY,
+    name varchar(50),
+    age integer
+);
+
+-- 插入10000条数据
+DO $$
+BEGIN
+    FOR i IN 1..100000 LOOP
+        INSERT INTO test_table (name, age) VALUES ('Name' || i, FLOOR(RANDOM() * 100));
+    END LOOP;
+END $$;
 
 
-psql -h  127.0.0.1 -p 9999 -U pgpool postgres -c "show pool_nodes"
+select count(*) from test_table;
+
+psql -h  127.0.0.1 -p 9999 -U postgres
+psql -h  127.0.0.1 -p 9999 -U postgres -c "show pool_nodes"
+
+ pcp_attach_node -h 127.0.0.1 -p 9898 -U pgpool -n 1
+
 
 # systemctl stop pgpool-II
 # systemctl stop postgresql-14
