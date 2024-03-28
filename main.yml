@@ -22,9 +22,7 @@
         state: absent
 
     - name: Autoremove unused packages
-      yum:
-        name: ''
-        state: autoremove
+      command: yum autoremove -y
 
     - name: Remove PostgreSQL data directory
       shell: rm -rf /var/lib/pgsql/14/data/
