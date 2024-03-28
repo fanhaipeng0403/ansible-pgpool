@@ -5,11 +5,15 @@
       systemd:
         name: pgpool-II
         state: stopped
+      ignore_errors: true
+
 
     - name: Stop PostgreSQL-14 service
       systemd:
         name: postgresql-14
         state: stopped
+      ignore_errors: true
+
 
     - name: Uninstall PostgreSQL packages
       yum:
