@@ -5,6 +5,14 @@
   command: pg_basebackup -h postgres2.local -p 5432 -U repl -w -Fp -Xs -Pv -R  -D /var/lib/pgsql/14/data/
 
 
+- name: Replace content of /usr/lib/tmpfiles.d/postgresql.conf
+  copy:
+    dest: "/usr/lib/tmpfiles.d/postgresql.conf"
+    src: "{{ playbook_dir }}/files/tmpfiles/postgresql.conf"
+    owner: postgres
+    group: postgres
+    mode: '0744'
+
 - name: Modify max_connections parameter
   lineinfile:
     path: /var/lib/pgsql/14/data/postgresql.conf
